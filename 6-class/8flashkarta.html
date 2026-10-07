@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Түріктер туралы тарихи деректер - Айналмалы Флеш-карталар</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html, body, * {
+            box-sizing: border-box;
+            font-family: Arial, "Liberation Sans", "DejaVu Sans", sans-serif !important;
+            user-select: none;
+            -webkit-font-smoothing: antialiased;
+            font-size-adjust: none;
+        }
+
+        body {
+            background-color: #f3e5c8;
+            background-image: 
+                radial-gradient(#c2a679 1.5px, transparent 1.5px),
+                radial-gradient(#c2a679 1.5px, #f3e5c8 1.5px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #3b2818;
+            margin: 0;
+            padding: 16px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-box {
+            background: linear-gradient(135deg, #e8d0a9 0%, #d8b888 100%);
+            border: 3px solid #7a4a21;
+            box-shadow: 0 6px 15px rgba(60, 35, 10, 0.2);
+        }
+
+        .dombyra-badge {
+            background: #fff8eb;
+            border: 2.5px solid #8b5a2b;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+            font-size: 22px !important;
+        }
+
+        /* 3D Flip Card Container */
+        .scene {
+            width: 100%;
+            max-width: 760px;
+            height: 460px;
+            perspective: 1200px;
+            margin: 10px auto 20px auto;
+            cursor: pointer;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 20px;
+            border: 4px solid #7a4a21;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 12px 28px rgba(60, 35, 10, 0.25), inset 0 0 35px rgba(180, 135, 80, 0.25);
+        }
+
+        .card-face::before {
+            content: "";
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border: 2px dashed #b8860b;
+            border-radius: 14px;
+            pointer-events: none;
+        }
+
+        /* Card Front */
+        .card-front {
+            background: linear-gradient(145deg, #fdf6e2 0%, #f7e6c4 100%);
+            color: #3b2818;
+        }
+
+        /* Card Back */
+        .card-back {
+            background: linear-gradient(145deg, #f2fae8 0%, #e1f5d3 100%);
+            color: #0f5132;
+            transform: rotateY(180deg);
+            border-color: #2e7d32;
+        }
+
+        .card-back::before {
+            border-color: #4caf50;
+        }
+
+        /* Uniform font size utilities for Kazakh letters */
+        .text-uniform-title {
+            font-size: 24px !important;
+            line-height: 1.4 !important;
+            font-weight: bold !important;
+            font-family: Arial, sans-serif !important;
+        }
+
+        .text-uniform-body {
+            font-size: 22px !important;
+            line-height: 1.5 !important;
+            font-weight: bold !important;
+            font-family: Arial, sans-serif !important;
+        }
+
+        .text-uniform-header {
+            font-size: 20px !important;
+            line-height: 1.5 !important;
+            font-family: Arial, sans-serif !important;
+        }
+
+        .text-uniform-btn {
+            font-size: 22px !important;
+            font-weight: bold !important;
+            font-family: Arial, sans-serif !important;
+        }
+
+        /* Action Buttons */
+        .btn-action {
+            background: linear-gradient(180deg, #8b5a2b 0%, #6d441f 100%);
+            color: #ffffff;
+            border: 2.5px solid #4a2c11;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+        }
+
+        .btn-action:hover {
+            background: linear-gradient(180deg, #9c6733 0%, #7d4f25 100%);
+            transform: translateY(-2px);
+        }
+
+        .btn-action:active {
+            transform: translateY(1px);
+        }
+
+        .btn-know {
+            background: linear-gradient(180deg, #2e7d32 0%, #1b5e20 100%);
+            border-color: #0f3812;
+        }
+
+        .btn-know:hover {
+            background: linear-gradient(180deg, #388e3c 0%, #2e7d32 100%);
+        }
+
+        .btn-review {
+            background: linear-gradient(180deg, #d84315 0%, #bf360c 100%);
+            border-color: #5d1900;
+        }
+
+        .btn-review:hover {
+            background: linear-gradient(180deg, #e65100 0%, #d84315 100%);
+        }
+
+        /* Floating dombyra animation */
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -70px) scale(1.7); }
+        }
+
+        .floating-dombyra {
+            position: absolute;
+            left: 50%;
+            top: 30%;
+            font-size: 48px;
+            pointer-events: none;
+            animation: floatUp 1.2s ease-out forwards;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+<div class="w-full max-w-3xl mb-4">
+    <div class="header-box rounded-2xl p-5 text-center relative">
+        <div class="flex items-center justify-center gap-2 mb-2">
+            <svg class="w-9 h-9 text-amber-950 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            <h1 class="text-uniform-title text-amber-950 m-0">Түріктер туралы тарихи деректер</h1>
+        </div>
+
+        <div class="bg-amber-50/90 border border-amber-800/40 rounded-xl p-4 text-left mb-4 text-amber-950 text-uniform-header">
+            <p class="font-black text-amber-950 mb-1">🔍 Зерттеу сұрағы:</p>
+            <p class="mb-3 pl-3 border-l-4 border-amber-700 italic font-bold text-amber-900">Қытай және араб деректері түркілер туралы қандай ақпарат береді?</p>
+            <p class="font-black text-amber-950 mb-1">🎯 Оқыту мақсаттары:</p>
+            <ul class="list-disc list-inside space-y-1 pl-1 text-amber-900 font-bold">
+                <li><strong>6.2.2.3</strong> көшпелілердің әскери өнеріндегі жетістіктерін сипаттау</li>
+                <li><strong>6.4.1.2</strong> көшпелілердің шаруашылық өмірінің ерекшеліктерін анықтау</li>
+            </ul>
+        </div>
+
+        <div class="flex justify-center items-center">
+            <div class="dombyra-badge px-6 py-2.5 rounded-xl font-bold text-amber-950 flex items-center gap-2">
+                <span>Жиналған домбыра:</span>
+                <span id="score" class="text-uniform-title text-amber-800">0</span>
+                <span class="text-3xl">🪕</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="w-full max-w-3xl flex flex-col items-center">
+    <!-- Progress Indicator -->
+    <div class="w-full max-w-2xl flex justify-between items-center mb-2 px-2">
+        <span class="text-uniform-header font-bold text-amber-950" id="progress">Флеш-карта: 1 / 20</span>
+        <div class="w-48 bg-amber-200/90 h-5 rounded-full overflow-hidden border border-amber-800/50">
+            <div id="progress-bar" class="bg-amber-800 h-full transition-all duration-300" style="width: 5%;"></div>
+        </div>
+    </div>
+
+    <!-- 3D Flipping Card Scene -->
+    <div class="scene" id="scene" onclick="flipCard()">
+        <div class="flashcard" id="card">
+            <!-- Front of Card (Question) -->
+            <div class="card-face card-front" id="card-front-content">
+                <div class="flex justify-between items-center">
+                    <span class="bg-amber-200/90 text-amber-950 px-3.5 py-1.5 rounded-lg text-uniform-header font-bold border border-amber-700/40">
+                        ❓ Сұрақ
+                    </span>
+                    <span class="text-uniform-header font-bold text-amber-800 flex items-center gap-1">
+                        🔄 Басып, жауабын ашыңыз
+                    </span>
+                </div>
+
+                <div class="my-auto py-4 text-center">
+                    <p class="text-uniform-body text-amber-950" id="question-text">
+                        Сұрақ жүктелуде...
+                    </p>
+                </div>
+
+                <div class="text-center pt-2 border-t border-amber-800/20 text-amber-800 text-uniform-header font-bold flex items-center justify-center gap-2">
+                    <span>👆 Картаны айналдыру үшін үстінен басыңыз</span>
+                </div>
+            </div>
+
+            <!-- Back of Card (Answer) -->
+            <div class="card-face card-back" id="card-back-content">
+                <div class="flex justify-between items-center">
+                    <span class="bg-green-200 text-green-950 px-3.5 py-1.5 rounded-lg text-uniform-header font-bold border border-green-700/40">
+                        ✅ Тарихи жауап
+                    </span>
+                    <span class="text-uniform-header font-bold text-green-800">
+                        📜 Оқулық дерегі
+                    </span>
+                </div>
+
+                <div class="my-auto py-2 text-center">
+                    <p class="text-uniform-title text-green-950 mb-3" id="answer-title">
+                        Дұрыс жауап
+                    </p>
+                    <p class="text-uniform-body text-green-900 bg-green-100/90 p-4 rounded-xl border border-green-600/40 shadow-inner" id="answer-text">
+                        Жауап тексті...
+                    </p>
+                </div>
+
+                <div class="text-center pt-2 border-t border-green-800/20 text-green-900 text-uniform-header font-bold">
+                    Төмендегі батырмалар арқылы біліміңізді бағалаңыз 👇
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full max-w-2xl flex flex-col sm:flex-row justify-center gap-4 mt-2 px-2" id="action-controls">
+        <button class="btn-action btn-know text-uniform-btn px-6 py-4 rounded-xl cursor-pointer flex-1 flex items-center justify-center gap-2" onclick="event.stopPropagation(); markAnswer(true);">
+            <span>✅ Білемін (+1 🪕)</span>
+        </button>
+        <button class="btn-action btn-review text-uniform-btn px-6 py-4 rounded-xl cursor-pointer flex-1 flex items-center justify-center gap-2" onclick="event.stopPropagation(); markAnswer(false);">
+            <span>❌ Қайталау керек</span>
+        </button>
+    </div>
+</div>
+
+<div class="w-full max-w-2xl header-box rounded-2xl p-8 text-center hidden my-6" id="results-card">
+    <div class="text-6xl mb-4">🎉 🪕 📜</div>
+    <h2 class="text-uniform-title text-amber-950 mb-4">Тамаша! Барлық флеш-карта аяқталды!</h2>
+    <p class="text-uniform-body text-amber-900 mb-6" id="final-summary">
+        Сіз 20 тарихи флеш-картаны толық шолып шықтыңыз.
+    </p>
+    <div class="bg-amber-100/90 border-2 border-amber-700 rounded-2xl p-6 max-w-md mx-auto mb-8 shadow-md">
+        <p class="text-uniform-header text-amber-900 font-black mb-2">Сіздің жинаған домбыраларыңыз:</p>
+        <div class="text-uniform-title text-amber-950 flex items-center justify-center gap-3">
+            <span id="final-score" class="text-4xl font-black">0</span> / 20 🪕
+        </div>
+    </div>
+    <button class="btn-action text-uniform-btn px-10 py-4 rounded-xl cursor-pointer" onclick="restartGame()">
+        🔄 Қайта бастау
+    </button>
+</div>
+
+<script>
+    // 20 Questions strictly derived from provided textbook context
+    const flashcards = [
+        {
+            q: "Түркілер әлемдік тарих сахнасына не өндіру арқылы шықты?",
+            answer: "Металл өндіру",
+            detail: "Түркілер металды кеңінен қолданысқа енгізді және сол арқылы өздерінің экономикалық қуатын арттырды."
+        },
+        {
+            q: "Археологтар V–IX ғасырларда балқытылған металл қалдықтарын қай өңірден тапты?",
+            answer: "Алтайдан",
+            detail: "Түркілер өндірген темір жоғары сапалы, төзімді әрі мыкты болған."
+        },
+        {
+            q: "Металл өндіру түркілерге қандай әскер жасақтауға мүмкіндік берді?",
+            answer: "Қуатты атты әскер",
+            detail: "Жауынгер мінген ат та металл сауытпен көмкерілді. Бұл олардың әскери жеңістеріне үлкен ықпал етті."
+        },
+        {
+            q: "Түркі жауынгерлерінің қорғануға арналған сауыты қандай түрінде болды?",
+            answer: "Ұзын етекті жеңсіз шекпен",
+            detail: "Қорғануға арналған бұл сауытқа тікбұрышты жалпақ темір қалақшалар бекітілді."
+        },
+        {
+            q: "Шекпенге темір қалақшалар қалай бекітілді?",
+            answer: "Шетіндегі тесіктері арқылы",
+            detail: "Шекпенге шетіндегі тесіктері арқылы тікбұрышты жалпақ темір қалақшалар тігіліп бекітілді."
+        },
+        {
+            q: "Түркілердің негізгі кәсібі қандай шаруашылық болды?",
+            answer: "Көшпелі және жартылай көшпелі малшаруашылығы",
+            detail: "Бұл шаруашылық оларды азық-түлік өнімдері, киім-кешек және баспанамен қамтамасыз етті."
+        },
+        {
+            q: "Көшпелілер негізінен қандай түліктерді өсірді?",
+            answer: "Қой, жылқы және түйе",
+            detail: "Ірі қара малшаруашылығында маңызды орын алған жоқ. Мал отбасының жекеменшігі саналды."
+        },
+        {
+            q: "Көшпелі қоғамда жайылым кімдерге тиесілі болды?",
+            answer: "Көшпелі қоғамның тең құқықты барлық мүшелеріне",
+            detail: "Түркі деректерінде: «Тұрақты мекені жоқ, бірақ әрқайсысының (яғни әр рудың) өзіне тиесілі жері бар» делінген."
+        },
+        {
+            q: "Византия императорының елшісі Менандрды қағанның қай мүлкі қатты таңғалдырды?",
+            answer: "900 адамға дейін сыйған киіз үйі",
+            detail: "Менандр алтын тақты және «жібек жамылғылы» киіз үй, сондай-ақ алтын тауыс (павлин) қонақтаған киіз үйді суреттейді."
+        },
+        {
+            q: "Аң аулаудың түркілер өміріндегі әскери маңызы қандай болды?",
+            answer: "Әскери жаттығу (із кесу, барлау, қаумалау)",
+            detail: "Қаумалап аң аулау арнайы дағдыны талап етті және әскери ұрыстарға дайындық іспетті еді."
+        },
+        {
+            q: "Аң аулауда қандай жыртқыш құстар пайдаланылды?",
+            answer: "Бүркіт, қаршыға, сұңқар, лашын, ителгі",
+            detail: "Бұл құстар еуропалық елшілерді иесінің қолына қайта келіп қонуымен таңғалдырды."
+        },
+        {
+            q: "Қазақстанда ежелден отырықшы-егіншілік мәдениеті дамыған өңірлер қайсысы?",
+            answer: "Қазақстанның оңтүстігі мен Жетісу",
+            detail: "Шу және Талас алқабында, Алатау аңғарында тұрғындар егіншілікпен айналысты."
+        },
+        {
+            q: "Шу және Талас алқабында егіншіліктің қандай түрі дамыды?",
+            answer: "Суармалы егіншілік түрі",
+            detail: "Каналдар мен арықтардан басқа суқоймалары салынды. Тары, бидай, жүзім, бау-бақша өсірілді."
+        },
+        {
+            q: "Көне арықтардың қалдықтары қай өзеннің төменгі ағысында сақталған?",
+            answer: "Іле өзенінің төменгі ағысында",
+            detail: "Сонымен бірге өзен суын көтеруге арналған бөгет орындарының қалдықтары табылды."
+        },
+        {
+            q: "Шу алқабында болған Қытай елшісі жазбаларында не деп атап өтті?",
+            answer: "«Қалаларда халықтың бір бөлігі жер өңдейді, ал екіншісі саудамен айналысады»",
+            detail: "Соғдылардың қоныс аударуы мен түркілердің отырықшылыққа көшуі егіншілікті жеделдетті."
+        },
+        {
+            q: "Қарлұқ тайпаларын сипаттаған араб авторы әл-Идриси не деп жазды?",
+            answer: "«Көшпелі адамдар... Алайда олар жер өңдейді»",
+            detail: "Бұл араб дерегі түркілер арасындағы егіншілік шаруашылығын растайды."
+        },
+        {
+            q: "VI–IX ғасырларда түркілер керуен жолдары бойындағы құдықтарға күмбез түрінде не салды?",
+            answer: "«Сардоба»",
+            detail: "Ерте ортағасырлық қалаларда қыштан, металдан, сүйек пен тастан жасалған бұйымдар кең таралды."
+        },
+        {
+            q: "Түркілер орнатқан балбал тастардың биіктігі шамамен қанша метр болды?",
+            answer: "3 метр шамасында",
+            detail: "Мүсіндер үшін 3 метрлік тастар таңдалып, оларға бедер-бейне салынды. Негізінен ер адамдар бейнеленді."
+        },
+        {
+            q: "Қабірге тас мүсін (балбал) орнатудың түркілік ғұрпы нені дәлелдейді?",
+            answer: "Марқұмның еш уақытта ұмытылмайтынын",
+            detail: "Мүсіндер қабірлерге мен ғибадат орнына тұрғызылды. Түркілер аруақтарға қорғаушы ретінде сенді."
+        },
+        {
+            q: "Дешті Қыпшақта балбалдар қай ғасырларға дейін орнатылып келді?",
+            answer: "XII–XIII ғасырларға дейін",
+            detail: "Ислам діні таралып, адамды бейнелеу жойылса да, Дешті Қыпшақта бұл ғұрып XII–XIII ғасырларға дейін сақталды."
+        }
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+    let isFlipped = false;
+
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'flip') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.15);
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.15);
+        } else if (type === 'dombyra') {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(329.63, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.6);
+        } else if (type === 'review') {
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+            osc.frequency.setValueAtTime(180, audioCtx.currentTime + 0.15);
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.25);
+        }
+    }
+
+    function renderCard() {
+        const card = flashcards[currentIndex];
+        
+        // Progress UI
+        document.getElementById('progress').innerText = `Флеш-карта: ${currentIndex + 1} / ${flashcards.length}`;
+        const pct = ((currentIndex + 1) / flashcards.length) * 100;
+        document.getElementById('progress-bar').style.width = `${pct}%`;
+
+        // Front Content
+        document.getElementById('question-text').innerText = card.q;
+
+        // Back Content
+        document.getElementById('answer-title').innerText = `✅ ${card.answer}`;
+        document.getElementById('answer-text').innerText = card.detail;
+
+        // Reset Flip
+        isFlipped = false;
+        document.getElementById('card').classList.remove('is-flipped');
+    }
+
+    function flipCard() {
+        isFlipped = !isFlipped;
+        const cardEl = document.getElementById('card');
+        if (isFlipped) {
+            cardEl.classList.add('is-flipped');
+        } else {
+            cardEl.classList.remove('is-flipped');
+        }
+        playSound('flip');
+    }
+
+    function markAnswer(knewIt) {
+        if (knewIt) {
+            score++;
+            document.getElementById('score').innerText = score;
+            playSound('dombyra');
+            animateDombyra();
+        } else {
+            playSound('review');
+        }
+
+        setTimeout(() => {
+            currentIndex++;
+            if (currentIndex < flashcards.length) {
+                renderCard();
+            } else {
+                showFinalResults();
+            }
+        }, 350);
+    }
+
+    function animateDombyra() {
+        const scene = document.getElementById('scene');
+        const icon = document.createElement('div');
+        icon.className = 'floating-dombyra';
+        icon.innerText = '🪕';
+        scene.appendChild(icon);
+
+        setTimeout(() => icon.remove(), 1200);
+    }
+
+    function showFinalResults() {
+        document.getElementById('scene').parentElement.classList.add('hidden');
+        const resultsCard = document.getElementById('results-card');
+        resultsCard.classList.remove('hidden');
+
+        document.getElementById('final-score').innerText = score;
+        const summaryText = document.getElementById('final-summary');
+
+        if (score === 20) {
+            summaryText.innerText = `Өте тамаша! Барлық 20 флеш-картаны толық меңгеріп, 20 домбыра ұтып алдыңыз! Түріктердің тарихын өте жақсы біледі екенсіз! 🏆`;
+        } else if (score >= 14) {
+            summaryText.innerText = `Құттықтаймыз! Сіз 20 сұрақтың ${score}-ін өте жақсы біліп, ${score} домбыра иелендіңіз! Жарайсың! 🌟`;
+        } else {
+            summaryText.innerText = `Нәтижеңіз: ${score} домбыра. Мәтіндерді қайта оқып шығып, флеш-карталарды қайтадан айналдырып көріңіз! 👍`;
+        }
+    }
+
+    function restartGame() {
+        currentIndex = 0;
+        score = 0;
+        document.getElementById('score').innerText = '0';
+        document.getElementById('results-card').classList.add('hidden');
+        document.getElementById('scene').parentElement.classList.remove('hidden');
+        renderCard();
+    }
+
+    window.onload = function() {
+        renderCard();
+    };
+</script>
+</body>
+</html>

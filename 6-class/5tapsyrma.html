@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VI–IX ғғ. Түркілердің шаруашылығы мен әскери өнері</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: #f4e8c1;
+            background-image: 
+                radial-gradient(#e0cf9b 15%, transparent 16%), 
+                radial-gradient(#e0cf9b 15%, transparent 16%);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px;
+            color: #3d2b1f;
+            margin: 0;
+            padding: 15px;
+            font-size: 19px;
+            line-height: 1.6;
+        }
+
+        .parchment-card {
+            background: #fdf5e6;
+            border: 8px solid #8b4513;
+            border-image: linear-gradient(to bottom right, #8b4513, #5c2e0b, #8b4513) 1;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            border-radius: 8px;
+        }
+
+        .header-title {
+            color: #5c1d06;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
+        }
+
+        .sticky-score {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            background: linear-gradient(135deg, #8b4513, #5c2e0b);
+            border: 3px solid #d2b48c;
+        }
+
+        .tab-btn {
+            background: #d2b48c;
+            border: 2px solid #8b4513;
+            color: #3d2b1f;
+            transition: all 0.25s ease;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: #8b4513;
+            color: #fff8dc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .q-box {
+            background: #fff8dc;
+            border: 2px solid #cd853f;
+            transition: border-color 0.2s;
+        }
+
+        .q-box:hover {
+            border-color: #8b4513;
+        }
+
+        .btn-custom {
+            background: linear-gradient(to bottom, #8b4513, #6b340e);
+            color: #fff8dc;
+            border: 2px solid #4a2309;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+        }
+
+        .btn-custom:hover {
+            background: linear-gradient(to bottom, #6b340e, #4a2309);
+            transform: translateY(-1px);
+        }
+
+        .btn-custom:active {
+            transform: translateY(1px);
+        }
+
+        .feedback-box {
+            display: none;
+            border-radius: 6px;
+            padding: 14px;
+            margin-top: 12px;
+            font-size: 18px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .feedback-box.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 2px solid #28a745;
+        }
+
+        .feedback-box.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 2px solid #dc3545;
+        }
+
+        .descriptor-box {
+            background: #e9d8a6;
+            border-left: 6px solid #8b4513;
+            color: #4a3b32;
+        }
+
+        .test-option-btn {
+            background: #f5e6c8;
+            border: 2px solid #8b4513;
+            color: #2b1d0c;
+            transition: all 0.2s;
+        }
+
+        .test-option-btn:hover:not(:disabled) {
+            background: #d2b48c;
+            transform: translateX(4px);
+        }
+
+        .test-option-btn.selected-correct {
+            background-color: #28a745 !important;
+            color: white !important;
+            border-color: #1e7e34 !important;
+        }
+
+        .test-option-btn.selected-incorrect {
+            background-color: #dc3545 !important;
+            color: white !important;
+            border-color: #bd2130 !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Pulse animation for score */
+        .score-anim {
+            animation: scorePop 0.4s ease;
+        }
+
+        @keyframes scorePop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); color: #ffd700; }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start">
+
+<div class="container max-w-4xl parchment-card p-4 md:p-8 my-4">
+
+    <!-- Тақырып пен ақпарат -->
+    <header class="text-center mb-6">
+        <h1 class="header-title text-2xl md:text-3xl font-bold pb-3 mb-4 border-b-2 border-amber-800">
+            🏛️ VI–IX ғғ. Түркілердің шаруашылығы мен әскери өнері
+        </h1>
+        
+        <div class="bg-amber-100/80 border-2 border-dashed border-amber-800 p-4 rounded-lg text-left text-base md:text-lg space-y-2">
+            <p><strong>📖 Сабақтың тақырыбы:</strong> Түріктер туралы тарихи деректер</p>
+            <p><strong>❓ Зерттеу сұрағы:</strong> Қытай және араб деректері түркілер туралы қандай ақпарат береді?</p>
+            <p><strong>🎯 Оқыту мақсаттары:</strong></p>
+            <ul class="list-disc list-inside pl-2 space-y-1">
+                <li><strong>6.2.2.3</strong> көшпелілердің әскери өнеріндегі жетістіктерін сипаттау;</li>
+                <li><strong>6.4.1.2</strong> көшпелілердің шаруашылық өмірінің ерекшеліктерін анықтау.</li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Сыйлық тақтасы -->
+    <div class="sticky-score text-amber-100 rounded-xl p-3 md:p-4 mb-6 shadow-lg flex flex-wrap justify-between items-center gap-2">
+        <div class="flex items-center gap-2">
+            <span class="text-xl md:text-2xl">🏆 Жиналған сыйлық:</span>
+            <span id="score-text" class="text-2xl md:text-3xl font-extrabold text-yellow-300">0 🪕 (Домбыра)</span>
+        </div>
+        <div class="text-sm md:text-base bg-amber-900/60 px-3 py-1 rounded-full border border-amber-600">
+            Дәреже: <span id="rank-text" class="font-bold text-yellow-200">Жас Тарихшы</span>
+        </div>
+    </div>
+
+    <!-- Табылар батырмалары -->
+    <nav class="tab-buttons grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mb-6">
+        <button class="tab-btn active py-3 px-2 text-center font-bold text-base md:text-lg rounded" onclick="switchTab(0)">1-Тапсырма</button>
+        <button class="tab-btn py-3 px-2 text-center font-bold text-base md:text-lg rounded" onclick="switchTab(1)">2-Тапсырма</button>
+        <button class="tab-btn py-3 px-2 text-center font-bold text-base md:text-lg rounded" onclick="switchTab(2)">3-Тапсырма</button>
+        <button class="tab-btn py-3 px-2 text-center font-bold text-base md:text-lg rounded" onclick="switchTab(3)">4-Тапсырма</button>
+        <button class="tab-btn py-3 px-2 text-center font-bold text-base md:text-lg rounded" onclick="switchTab(4)">20 Тест Ойыны</button>
+    </nav>
+
+    <!-- 1-ТАПСЫРМА -->
+    <section class="task-card hidden active p-4 md:p-6 rounded-lg mb-6" id="task1">
+        <h2 class="text-xl md:text-2xl font-bold text-amber-900 mb-3 text-center">1-тапсырма. Ақиқат немесе Жалған (5 сұрақ)</h2>
+        <p class="mb-4 font-semibold text-amber-950">Оқулық мәтініне сүйене отырып, берілген тұжырымдардың ақиқат немесе жалған екенін анықтаңыз:</p>
+        
+        <div class="space-y-4">
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">1. Түркілер әлемдік тарих сахнасына металл өндіру арқылы шықты.</p>
+                <div class="flex gap-6">
+                    <label class="cursor-pointer flex items-center gap-2"><input type="radio" name="t1_1" value="Ақиқат" class="w-5 h-5 accent-amber-800"> Ақиқат</label>
+                    <label class="cursor-pointer flex items-center gap-2"><input type="radio" name="t1_1" value="Жалған" class="w-5 h-5 accent-amber-800"> Жалған</label>
+                </div>
+            </div>
+
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">2. Түркілердің негізгі кәсібі отырықшы егіншілік болды, мал шаруашылығы дамымады.</p>
+                <div class="flex gap-6">
+                    <label class="cursor-pointer flex items-center gap-2"><input type="radio" name="t1_2" value="Ақиқат" class="w-5 h-5 accent-amber-800"> Ақиқат</label>
+                    <label class="cursor-pointer flex items-center gap-2"><input type="radio" name="t1_2" value="Жалған" class="w-5 h-5 accent-amber-800"> Жалған</label>
+                </div>
+            </div>
+
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">3. Археологтар Алтайдан V–IX ғғ. балқытылған металл қалдықтарын тапты.</p>
+                <div class="flex gap-6">
+                    <label class="cursor-pointer flex items-center gap-2"><input type="radio" name="t1_3" value="Ақиқат" class="w-5 h-5 accent-amber-800"> Ақиқат</label>
+                    <label class="cursor-pointer flex items-center gap-2"><input type="radio" name="t1_3" value="Жалған" class="w-5 h-5 accent-amber-800"> Жалған</label>
+                </div>
+            </div>
+
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">4. 900 адамға дейін сыйған қағанның киіз үйі Рим императорын таңғалдырған.</p>
+                <div class="flex gap-6">
+                    <label class="cursor-pointer flex items-center gap-2"><input type="radio" name="t1_4" value="Ақиқат" class="w-5 h-5 accent-amber-800"> Ақиқат</label>
+                    <label class="cursor-pointer flex items-center gap-2"><input type="radio" name="t1_4" value="Жалған" class="w-5 h-5 accent-amber-800"> Жалған</label>
+                </div>
+            </div>
+
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">5. Түркілерде жайылым көшпелі қоғамның тең құқықты барлық мүшелеріне тиесілі болды.</p>
+                <div class="flex gap-6">
+                    <label class="cursor-pointer flex items-center gap-2"><input type="radio" name="t1_5" value="Ақиқат" class="w-5 h-5 accent-amber-800"> Ақиқат</label>
+                    <label class="cursor-pointer flex items-center gap-2"><input type="radio" name="t1_5" value="Жалған" class="w-5 h-5 accent-amber-800"> Жалған</label>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-custom w-full py-3 mt-5 font-bold text-lg rounded-md" onclick="checkTask1()">Тексеру</button>
+        <div class="feedback-box" id="feedback1"></div>
+
+        <div class="descriptor-box mt-5 p-4 rounded text-base">
+            <strong>📋 Дескриптор:</strong><br>
+            • Металл өндіру және мал шаруашылығына қатысты деректерді талдап, ақиқат немесе жалған екенін анықтайды;<br>
+            • Мәтіндегі тарихи фактілерді (мекендер, тұлғалар, қоғамдық қатынастар) ажыратады.
+        </div>
+    </section>
+
+    <!-- 2-ТАПСЫРМА -->
+    <section class="task-card hidden p-4 md:p-6 rounded-lg mb-6" id="task2">
+        <h2 class="text-xl md:text-2xl font-bold text-amber-900 mb-3 text-center">2-тапсырма. Блум таксономиясы бойынша тапсырмалар</h2>
+        
+        <div class="space-y-4">
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">1. Білу: Түркілерде аң аулауда қолданылған қыран құстарды атаңыз (Мәтін бойынша):</p>
+                <input type="text" id="t2_1" placeholder="Жауабыңызды осы жерге жазыңыз..." class="w-full p-3 border-2 border-amber-800 rounded bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-700">
+            </div>
+
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">2. Түсіну: Неліктен көшпелілер үшін киіз үй ең қолайлы баспана болды?</p>
+                <select id="t2_2" class="w-full p-3 border-2 border-amber-800 rounded bg-amber-50 text-base focus:outline-none focus:ring-2 focus:ring-amber-700">
+                    <option value="">-- Жауапты таңдаңыз --</option>
+                    <option value="A">Ол тастан жасалғандықтан берік болды</option>
+                    <option value="B">Табиғатпен тығыз байланысты көшпелілер үшін тасымалдауға жеңіл, қолайлы болғандықтан</option>
+                    <option value="C">Тек қыста ғана пайдалануға арналғандықтан</option>
+                </select>
+            </div>
+
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">3. Қолдану: Мәтінге сүйене отырып, металл өндірудің әскери істегі қолданысын көрсетіңіз:</p>
+                <select id="t2_3" class="w-full p-3 border-2 border-amber-800 rounded bg-amber-50 text-base focus:outline-none focus:ring-2 focus:ring-amber-700">
+                    <option value="">-- Жауапты таңдаңыз --</option>
+                    <option value="A">Тек қана егін оратын құралдар жасауға қолданды</option>
+                    <option value="B">Қорғануға арналған сауыт пен жауынгер мінген атқа металл сауыт кигізуге қолданды</option>
+                    <option value="C">Тек тұрмыстық ыдыс-аяқтар жасау үшін пайдаланды</option>
+                </select>
+            </div>
+
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">4. Талдау: Қарлұқ тайпаларын сипаттаған әл-Идрисидің «Көшпелі адамдар... Алайда олар жер өндейді» деген сөзінен қандай қорытынды жасауға болады?</p>
+                <select id="t2_4" class="w-full p-3 border-2 border-amber-800 rounded bg-amber-50 text-base focus:outline-none focus:ring-2 focus:ring-amber-700">
+                    <option value="">-- Жауапты таңдаңыз --</option>
+                    <option value="A">Түркілер тек көшпелі болған, егіншілікпен мүлде айналыспаған</option>
+                    <option value="B">Түркілер көшпелі өмір сүргенімен, оларда отырықшылық пен егіншілік қатар дамыған</option>
+                    <option value="C">Әл-Идриси түркілер туралы қате мәлімет жазған</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="btn-custom w-full py-3 mt-5 font-bold text-lg rounded-md" onclick="checkTask2()">Тексеру</button>
+        <div class="feedback-box" id="feedback2"></div>
+
+        <div class="descriptor-box mt-5 p-4 rounded text-base">
+            <strong>📋 Дескриптор:</strong><br>
+            • Мәтін бойынша аңшылықта қолданылған қыран құстарды атайды (білу);<br>
+            • Киіз үйдің көшпелілер өміріндегі тиімділігін түсіндіреді (түсіну);<br>
+            • Металл өндірісінің әскери өнердегі маңызын анықтайды (қолдану);<br>
+            • Араб деректеріне талдау жасай отырып, шаруашылық ерекшелігін қорытындылайды (талдау).
+        </div>
+    </section>
+
+    <!-- 3-ТАПСЫРМА -->
+    <section class="task-card hidden p-4 md:p-6 rounded-lg mb-6" id="task3">
+        <h2 class="text-xl md:text-2xl font-bold text-amber-900 mb-3 text-center">3-тапсырма. Жасырын кілт сөздерді табу</h2>
+        <p class="mb-4 font-semibold text-amber-950">Сұрақтарға жауап беру арқылы мәтіндегі 5 негізгі кілт сөзді табыңыз:</p>
+
+        <div class="space-y-4">
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">1-сұрақ: VI–IX ғғ. түркілер керуен жолдары бойындағы құдықтарға күмбез түрінде не салды?</p>
+                <input type="text" id="t3_1" placeholder="Жасырын сөзді жазыңыз..." class="w-full p-3 border-2 border-amber-800 rounded bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-700">
+            </div>
+
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">2-сұрақ: Түркілер қабірлерге орнатқан, негізінен ер адамды бейнелейтін тас мүсіндер қалай аталады?</p>
+                <input type="text" id="t3_2" placeholder="Жасырын сөзді жазыңыз..." class="w-full p-3 border-2 border-amber-800 rounded bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-700">
+            </div>
+
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">3-сұрақ: Мәтін бойынша Византия елшісі Менандрды таңғалдырған қағанның баспанасы не?</p>
+                <input type="text" id="t3_3" placeholder="Жасырын сөзді жазыңыз..." class="w-full p-3 border-2 border-amber-800 rounded bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-700">
+            </div>
+
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">4-сұрақ: Шу мен Талас алқабында егіншілікпен айналысқанда су жүргізу үшін нелер салынды?</p>
+                <input type="text" id="t3_4" placeholder="Жасырын сөзді жазыңыз..." class="w-full p-3 border-2 border-amber-800 rounded bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-700">
+            </div>
+
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">5-сұрақ: Түркілер металл өндіру арқылы нелерін арттырды?</p>
+                <input type="text" id="t3_5" placeholder="Жасырын сөзді жазыңыз..." class="w-full p-3 border-2 border-amber-800 rounded bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-700">
+            </div>
+        </div>
+
+        <button class="btn-custom w-full py-3 mt-5 font-bold text-lg rounded-md" onclick="checkTask3()">Тексеру</button>
+        <div class="feedback-box" id="feedback3"></div>
+
+        <div class="descriptor-box mt-5 p-4 rounded text-base">
+            <strong>📋 Дескриптор:</strong><br>
+            • Берілген сұрақтар негізінде мәтіндегі жасырын кілт сөздерді (сардоба, балбал, киіз үй, каналдар/арықтар, экономикалық қуатын) дұрыс табады.
+        </div>
+    </section>
+
+    <!-- 4-ТАПСЫРМА -->
+    <section class="task-card hidden p-4 md:p-6 rounded-lg mb-6" id="task4">
+        <h2 class="text-xl md:text-2xl font-bold text-amber-900 mb-3 text-center">4-тапсырма. Тарихи хронология</h2>
+        <p class="mb-4 font-semibold text-amber-950">Мәтінде көрсетілген уақыт аралықтарында қандай оқиғалар немесе процестер болғанын анықтаңыз:</p>
+
+        <div class="space-y-4">
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">1. V–IX ғасырларда Алтайда қандай процесс жүрді?</p>
+                <input type="text" id="t4_1" placeholder="Оқиғаны немесе процесті жазыңыз..." class="w-full p-3 border-2 border-amber-800 rounded bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-700">
+            </div>
+
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">2. VI–IX ғасырларда түркілер керуен жолдары бойына не салды?</p>
+                <input type="text" id="t4_2" placeholder="Оқиғаны немесе құрылысты жазыңыз..." class="w-full p-3 border-2 border-amber-800 rounded bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-700">
+            </div>
+
+            <div class="q-box p-4 rounded-md">
+                <p class="font-bold text-amber-950 mb-2">3. XII–XIII ғасырларға дейін Дешті Қыпшақта қандай дәстүр сақталып келді?</p>
+                <input type="text" id="t4_3" placeholder="Дәстүрді жазыңыз..." class="w-full p-3 border-2 border-amber-800 rounded bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-700">
+            </div>
+        </div>
+
+        <button class="btn-custom w-full py-3 mt-5 font-bold text-lg rounded-md" onclick="checkTask4()">Тексеру</button>
+        <div class="feedback-box" id="feedback4"></div>
+
+        <div class="descriptor-box mt-5 p-4 rounded text-base">
+            <strong>📋 Дескриптор:</strong><br>
+            • Мәтіндегі хронологиялық жылдар мен ғасырларға сәйкес тарихи оқиғаларды дұрыс сәйкестендіріп жазады.
+        </div>
+    </section>
+
+    <!-- 20 ТЕСТ ОЙЫНЫ -->
+    <section class="task-card hidden p-4 md:p-6 rounded-lg mb-6" id="task5">
+        <h2 class="text-xl md:text-2xl font-bold text-amber-900 mb-2 text-center">🎮 20 Тарихи Тест Ойыны</h2>
+        <p class="mb-4 text-center font-semibold text-amber-950">
+            Әр дұрыс жауап үшін <span class="text-amber-800 font-bold">+1 Домбыра 🪕</span> беріледі! Қате жауап берсеңіз, дұрыс жауабы мен оқулықтан анықтамасы бірден шығады.
+        </p>
+
+        <div id="test-container" class="space-y-4"></div>
+    </section>
+
+</div>
+
+<script>
+    // Audio Context for Dombyra strum sound
+    let audioCtx = null;
+
+    function playDombyraSound() {
+        try {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const now = audioCtx.currentTime;
+            const freqs = [293.66, 440.00, 587.33]; // D4, A4, D5 strum tones
+
+            freqs.forEach((freq, idx) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, now + idx * 0.05);
+
+                gain.gain.setValueAtTime(0.3, now + idx * 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.05 + 0.8);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(now + idx * 0.05);
+                osc.stop(now + idx * 0.05 + 0.85);
+            });
+        } catch (e) {
+            console.log("Audio not allowed yet");
+        }
+    }
+
+    let score = 0;
+    let answeredTasks = {};
+
+    function addScore(count = 1) {
+        score += count;
+        const scoreElem = document.getElementById('score-text');
+        scoreElem.innerText = score + " 🪕 (Домбыра)";
+        scoreElem.classList.remove('score-anim');
+        void scoreElem.offsetWidth; // trigger reflow
+        scoreElem.classList.add('score-anim');
+
+        // Update rank title
+        const rankElem = document.getElementById('rank-text');
+        if (score >= 25) {
+            rankElem.innerText = "👑 Ұлы Қаған";
+        } else if (score >= 15) {
+            rankElem.innerText = "⚔️ Түркі Сарбазы";
+        } else if (score >= 5) {
+            rankElem.innerText = "📜 Білгір Тарихшы";
+        } else {
+            rankElem.innerText = "🪕 Жас Тарихшы";
+        }
+
+        playDombyraSound();
+    }
+
+    function switchTab(index) {
+        const tabs = document.querySelectorAll('.tab-btn');
+        const cards = document.querySelectorAll('.task-card');
+        
+        tabs.forEach((tab, i) => {
+            if(i === index) {
+                tab.classList.add('active');
+                cards[i].classList.remove('hidden');
+                cards[i].classList.add('active');
+            } else {
+                tab.classList.remove('active');
+                cards[i].classList.add('hidden');
+                cards[i].classList.remove('active');
+            }
+        });
+    }
+
+    function checkTask1() {
+        const answers = {
+            t1_1: "Ақиқат",
+            t1_2: "Жалған",
+            t1_3: "Ақиқат",
+            t1_4: "Жалған",
+            t1_5: "Ақиқат"
+        };
+
+        let correctCount = 0;
+        let detailsHtml = "";
+
+        for(let i = 1; i <= 5; i++) {
+            const selected = document.querySelector(`input[name="t1_${i}"]:checked`);
+            const val = selected ? selected.value : "Жауап берілмеді";
+            if(val === answers[`t1_${i}`]) {
+                correctCount++;
+                detailsHtml += `<p style="color: #155724;">✓ ${i}-сұрақ: Дұрыс! (${answers[`t1_${i}`]})</p>`;
+            } else {
+                detailsHtml += `<p style="color: #721c24;">✗ ${i}-сұрақ: Қате. Дұрыс жауабы: ${answers[`t1_${i}`]}</p>`;
+            }
+        }
+
+        const feedback = document.getElementById('feedback1');
+        feedback.style.display = "block";
+        feedback.className = "feedback-box " + (correctCount === 5 ? "correct" : "incorrect");
+        feedback.innerHTML = `<strong>Нәтиже: ${correctCount}/5 дұрыс жауап!</strong><br>` + detailsHtml;
+
+        if(!answeredTasks['t1'] && correctCount > 0) {
+            addScore(correctCount);
+            answeredTasks['t1'] = true;
+        }
+    }
+
+    function checkTask2() {
+        const ans1 = document.getElementById('t2_1').value.trim().toLowerCase();
+        const ans2 = document.getElementById('t2_2').value;
+        const ans3 = document.getElementById('t2_3').value;
+        const ans4 = document.getElementById('t2_4').value;
+
+        let detailsHtml = "";
+        let count = 0;
+
+        if(ans1.includes("бүркіт") || ans1.includes("қаршыға") || ans1.includes("сұңқар") || ans1.includes("лашын") || ans1.includes("ителгі")) {
+            count++;
+            detailsHtml += `<p style="color: #155724;">✓ 1-сұрақ (Білу): Дұрыс! (Мәтінде: бүркіт, қаршыға, сұңқар, лашын, ителгі)</p>`;
+        } else {
+            detailsHtml += `<p style="color: #721c24;">✗ 1-сұрақ (Білу): Қате. Дұрыс жауабы: Бүркіт, қаршыға, сұңқар, лашын, ителгі.</p>`;
+        }
+
+        if(ans2 === "B") {
+            count++;
+            detailsHtml += `<p style="color: #155724;">✓ 2-сұрақ (Түсіну): Дұрыс! (Тасымалдауға жеңіл, қолайлы баспана)</p>`;
+        } else {
+            detailsHtml += `<p style="color: #721c24;">✗ 2-сұрақ (Түсіну): Қате. Дұрыс жауап: B</p>`;
+        }
+
+        if(ans3 === "B") {
+            count++;
+            detailsHtml += `<p style="color: #155724;">✓ 3-сұрақ (Қолдану): Дұрыс! (Қорғануға арналған сауыт пен ат сауыты)</p>`;
+        } else {
+            detailsHtml += `<p style="color: #721c24;">✗ 3-сұрақ (Қолдану): Қате. Дұрыс жауап: B</p>`;
+        }
+
+        if(ans4 === "B") {
+            count++;
+            detailsHtml += `<p style="color: #155724;">✓ 4-сұрақ (Талдау): Дұрыс! (Отырықшылық пен егіншілік қатар дамыған)</p>`;
+        } else {
+            detailsHtml += `<p style="color: #721c24;">✗ 4-сұрақ (Талдау): Қате. Дұрыс жауап: B</p>`;
+        }
+
+        const feedback = document.getElementById('feedback2');
+        feedback.style.display = "block";
+        feedback.className = "feedback-box " + (count === 4 ? "correct" : "incorrect");
+        feedback.innerHTML = `<strong>Нәтиже: ${count}/4 дұрыс жауап!</strong><br>` + detailsHtml;
+
+        if(!answeredTasks['t2'] && count > 0) {
+            addScore(count);
+            answeredTasks['t2'] = true;
+        }
+    }
+
+    function checkTask3() {
+        const a1 = document.getElementById('t3_1').value.trim().toLowerCase();
+        const a2 = document.getElementById('t3_2').value.trim().toLowerCase();
+        const a3 = document.getElementById('t3_3').value.trim().toLowerCase();
+        const a4 = document.getElementById('t3_4').value.trim().toLowerCase();
+        const a5 = document.getElementById('t3_5').value.trim().toLowerCase();
+
+        let count = 0;
+        let detailsHtml = "";
+
+        if(a1.includes("сардоба")) { count++; detailsHtml += `<p style="color: #155724;">✓ 1. Сардоба (Дұрыс)</p>`; }
+        else { detailsHtml += `<p style="color: #721c24;">✗ 1. Қате. Дұрыс жауабы: Сардоба</p>`; }
+
+        if(a2.includes("балбал")) { count++; detailsHtml += `<p style="color: #155724;">✓ 2. Балбал (Дұрыс)</p>`; }
+        else { detailsHtml += `<p style="color: #721c24;">✗ 2. Қате. Дұрыс жауабы: Балбал тастар</p>`; }
+
+        if(a3.includes("киіз үй")) { count++; detailsHtml += `<p style="color: #155724;">✓ 3. Киіз үй (Дұрыс)</p>`; }
+        else { detailsHtml += `<p style="color: #721c24;">✗ 3. Қате. Дұрыс жауабы: Киіз үй</p>`; }
+
+        if(a4.includes("канал") || a4.includes("арық")) { count++; detailsHtml += `<p style="color: #155724;">✓ 4. Каналдар мен арықтар (Дұрыс)</p>`; }
+        else { detailsHtml += `<p style="color: #721c24;">✗ 4. Қате. Дұрыс жауабы: Каналдар мен арықтар</p>`; }
+
+        if(a5.includes("экономика") || a5.includes("қуат")) { count++; detailsHtml += `<p style="color: #155724;">✓ 5. Экономикалық қуатын (Дұрыс)</p>`; }
+        else { detailsHtml += `<p style="color: #721c24;">✗ 5. Қате. Дұрыс жауабы: Экономикалық қуатын</p>`; }
+
+        const feedback = document.getElementById('feedback3');
+        feedback.style.display = "block";
+        feedback.className = "feedback-box " + (count === 5 ? "correct" : "incorrect");
+        feedback.innerHTML = `<strong>Нәтиже: ${count}/5 дұрыс жауап!</strong><br>` + detailsHtml;
+
+        if(!answeredTasks['t3'] && count > 0) {
+            addScore(count);
+            answeredTasks['t3'] = true;
+        }
+    }
+
+    function checkTask4() {
+        const a1 = document.getElementById('t4_1').value.trim().toLowerCase();
+        const a2 = document.getElementById('t4_2').value.trim().toLowerCase();
+        const a3 = document.getElementById('t4_3').value.trim().toLowerCase();
+
+        let count = 0;
+        let detailsHtml = "";
+
+        if(a1.includes("металл") || a1.includes("балқытылған")) {
+            count++;
+            detailsHtml += `<p style="color: #155724;">✓ V–IX ғғ.: Металл балқытылды / Металл өндірілді (Дұрыс)</p>`;
+        } else {
+            detailsHtml += `<p style="color: #721c24;">✗ V–IX ғғ.: Қате. Дұрыс жауабы: Металл балқытылды</p>`;
+        }
+
+        if(a2.includes("сардоба")) {
+            count++;
+            detailsHtml += `<p style="color: #155724;">✓ VI–IX ғғ.: Құдықтарға күмбез түрінде «сардоба» салынды (Дұрыс)</p>`;
+        } else {
+            detailsHtml += `<p style="color: #721c24;">✗ VI–IX ғғ.: Қате. Дұрыс жауабы: Күмбез түрінде «сардоба» салынды</p>`;
+        }
+
+        if(a3.includes("балбал")) {
+            count++;
+            detailsHtml += `<p style="color: #155724;">✓ XII–XIII ғғ.: Балбалдар орнатылып келді (Дұрыс)</p>`;
+        } else {
+            detailsHtml += `<p style="color: #721c24;">✗ XII–XIII ғғ.: Қате. Дұрыс жауабы: Балбалдар орнатылып келді</p>`;
+        }
+
+        const feedback = document.getElementById('feedback4');
+        feedback.style.display = "block";
+        feedback.className = "feedback-box " + (count === 3 ? "correct" : "incorrect");
+        feedback.innerHTML = `<strong>Нәтиже: ${count}/3 дұрыс жауап!</strong><br>` + detailsHtml;
+
+        if(!answeredTasks['t4'] && count > 0) {
+            addScore(count);
+            answeredTasks['t4'] = true;
+        }
+    }
+
+    const testData = [
+        {
+            q: "1. Түркілер әлемдік тарих сахнасына не өндіру арқылы шықты?",
+            options: ["Алтабас", "Металл", "Қыш ыдыс", "Алтын тас"],
+            correct: 1,
+            desc: "Мәтін бойынша: Түркілер әлемдік тарих сахнасына металл өндіру арқылы шықты."
+        },
+        {
+            q: "2. Археологтар V–IX ғасырларда балқытылған металл қалдықтарын қай жерден тапты?",
+            options: ["Алтайдан", "Түркістаннан", "Іледен", "Алатаудан"],
+            correct: 0,
+            desc: "Мәтін бойынша: Археологтар Алтайдан V–IX ғасырларда балқытылған металл қалдықтарын тапты."
+        },
+        {
+            q: "3. Түркілер өндірген темір қандай сипатта болды?",
+            options: ["Жұмсақ, тез сынғыш", "Жоғары сапалы, төзімді әрі мықты", "Ауыр және өңделмейтін", "Тек сәндікке арналған"],
+            correct: 1,
+            desc: "Мәтін бойынша: Түркілер өндірген темір жоғары сапалы, төзімді әрі мықты болған."
+        },
+        {
+            q: "4. Түркілерде қорғануға арналған сауыт қандай пішінде жасалған?",
+            options: ["Көкірекше түрінде", "Ұзын етекті жеңсіз шекпен түрінде", "Тас қалқан түрінде", "Былғары тоны түрінде"],
+            correct: 1,
+            desc: "Мәтін бойынша: Қорғануға арналған сауыт ұзын етекті жеңсіз шекпен түрінде болды."
+        },
+        {
+            q: "5. Түркілер үшін металл өндіру әскерге қандай мүмкіндік берді?",
+            options: ["Мүлде қарусыз жүруге", "Қуатты атты әскер жасақтауына", "Тек жаяу әскер ұстауға", "Теңіз флотын құруға"],
+            correct: 1,
+            desc: "Мәтін бойынша: Металл өндіру түркілердің қуатты атты әскер жасақтауына мүмкіндік берді."
+        },
+        {
+            q: "6. Түркілердің негізгі кәсібі қандай шаруашылық болды?",
+            options: ["Отырықшы егіншілік", "Көшпелі және жартылай көшпелі малшаруашылығы", "Балық аулау", "Тек қана сауда жасау"],
+            correct: 1,
+            desc: "Мәтін бойынша: Түркілердің негізгі кәсібі көшпелі және жартылай көшпелі малшаруашылығы болды."
+        },
+        {
+            q: "7. Көшпелілер негізінен қандай мал түрлерін өсірді?",
+            options: ["Тек ірі қара", "Қой, жылқы, түйе", "Шошқа мен ешкі", "Тек түйе"],
+            correct: 1,
+            desc: "Мәтін бойынша: Көшпелілер негізінен қой мен жылқы, түйе өсірді. Ірі қара малшаруашылығында маңызды орын алған жоқ."
+        },
+        {
+            q: "8. Көшпелі қоғамда жайылым кімдерге тиесілі болды?",
+            options: ["Тек қағанға", "Тек байларға", "Көшпелі қоғамның тең құқықты барлық мүшелеріне", "Шетелдік елшілерге"],
+            correct: 2,
+            desc: "Мәтін бойынша: Жайылым көшпелі қоғамның тең құқықты барлық мүшелеріне тиесілі болды."
+        },
+        {
+            q: "9. 900 адамға дейін сыйған қағанның киіз үйі қай елшіні таңғалдырған?",
+            options: ["Қытай елшісін", "Византия императорының елшісі Менандрды", "Араб саяхатшысын", "Иран елшісін"],
+            correct: 1,
+            desc: "Мәтін бойынша: 900 адамға дейін сыйған қағанның киіз үйі Византия императорының елшісі Менандрды қатты таңғалдырған."
+        },
+        {
+            q: "10. Аңшылықтың түркілер өміріндегі әскери маңызы қандай болды?",
+            options: ["Әскери ұрыстарға дайындық (із кесу, барлау, қаумалау)", "Тек демалыс ұйымдастыру", "Жаңа жерлерді басып алу", "Қару сату"],
+            correct: 0,
+            desc: "Мәтін бойынша: Аң аулау әскери ұрыстарға дайындық іспетті еді (із кесу, барлау, қаумалау)."
+        },
+        {
+            q: "11. Көшпелілер аң аулағанда қандай құстарды пайдаланды?",
+            options: ["Тоғғай мен кептер", "Бүркіт, қаршыға, сұңқар, лашын, ителгі", "Түйеқуыс пен қарлығаш", "Үкі мен сауысқан"],
+            correct: 1,
+            desc: "Мәтін бойынша: Қыран құстардан: бүркіт, қаршыға, сұңқар, лашын мен ителгі т.б. пайдаланылды."
+        },
+        {
+            q: "12. Қазақстанның қай өңірлерінде ежелден отырықшы-егіншілік мәдениеті дамыған?",
+            options: ["Солтүстік пен Батыс", "Оңтүстігі мен Жетісу", "Тек орталық өңірде", "Алтай тауларында"],
+            correct: 1,
+            desc: "Мәтін бойынша: Қазақстанның оңтүстігі мен Жетісу ежелден отырықшы-егіншілік мәдениеті дамыған өңір еді."
+        },
+        {
+            q: "13. Шу және Талас алқабында егіншіліктің қандай түрі дамыды?",
+            options: ["Тек жаңбырлы егіншілік", "Суармалы түрі", "Тек жылыжайлық", "Егіншілік дамымады"],
+            correct: 1,
+            desc: "Мәтін бойынша: Мұнда егіншіліктің суармалы түрі дамыды."
+        },
+        {
+            q: "14. Көне арықтардың қалдықтары қай өзеннің төменгі ағысында сақталды?",
+            options: ["Сырдария", "Іле өзенінің", "Ертіс", "Жайық"],
+            correct: 1,
+            desc: "Мәтін бойынша: Көне арықтар Іле өзенінің төменгі ағысында сақталды."
+        },
+        {
+            q: "15. Шу алқабында болған Қытай елшісі не деп жазды?",
+            options: ["«Халық тек аң аулаумен айналысады»", "«Қалаларда халықтың бір бөлігі жер өндейді, ал екіншісі саудамен айналысады»", "«Бұл жерде ешқандай қала жоқ»", "«Халық тек балық аулайды»"],
+            correct: 1,
+            desc: "Мәтін бойынша Қытай елшісі: «Қалаларда халықтың бір бөлігі жер өндейді, ал екіншісі саудамен айналысады» деп жазды."
+        },
+        {
+            q: "16. Қарлұқ тайпаларын сипаттаған араб авторы кім?",
+            options: ["Менандр", "Әл-Идриси", "Геродот", "Сюань-Цзан"],
+            correct: 1,
+            desc: "Мәтін бойынша: Қарлұқ тайпаларын сипаттаған әл-Идриси: «Көшпелі адамдар... Алайда олар жер өндейді» деп жазды."
+        },
+        {
+            q: "17. VI–IX ғасырларда түркілер керуен жолдары бойындағы құдықтарға күмбез түрінде не салды?",
+            options: ["«Кесене»", "«Сардоба»", "«Мешіт»", "«Бекініс»"],
+            correct: 1,
+            desc: "Мәтін бойынша: VI–IX ғасырларда түркілер керуен жолдары бойындағы құдықтарға күмбез түрінде «сардоба» салды."
+        },
+        {
+            q: "18. Түркілер орнатқан «Балбал» тастар негізінен кімді бейнеледі?",
+            options: ["Тек жас балаларды", "Ер адамды (ара-тұра әйел бейнелері де кездеседі)", "Тек жан-жануарларды", "Қағанның сарайын"],
+            correct: 1,
+            desc: "Мәтін бойынша: «Балбалдар» негізінен ер адамды бейнелейді, ара-тұра әйел бейнелері де кездеседі."
+        },
+        {
+            q: "19. Балбал тас мүсіндерін орнатудың түркілік ғұрпы нені дәлелдейді?",
+            options: ["Марқұмның еш уақытта ұмытылмайтынын", "Жаулардан қорқатынын", "Тек байлықты көрсетуді", "Шеберлік жарысын"],
+            correct: 0,
+            desc: "Мәтін бойынша: Қабірге тас мүсін орнатудың түркілік ғұрпы марқұмның еш уақытта ұмытылмайтынын дәлелдейді."
+        },
+        {
+            q: "20. Неліктен кейіннен адамды бейнелеу дәстүрі жойылды?",
+            options: ["Тас таусылғандықтан", "Ислам дінінің таралуына байланысты", "Адамдар мүсін жасай алмай қалды", "Қаған тыйым салғандықтан"],
+            correct: 1,
+            desc: "Мәтін бойынша: Ислам дінінің таралуына байланысты адамды бейнелеу дәстүрі жойылды."
+        }
+    ];
+
+    function renderTests() {
+        const container = document.getElementById('test-container');
+        container.innerHTML = "";
+
+        testData.forEach((item, index) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'q-box p-4 rounded-md';
+            qDiv.id = `test_q_${index}`;
+
+            let optionsHtml = "";
+            item.options.forEach((opt, optIndex) => {
+                optionsHtml += `<button class="test-option-btn w-full text-left p-3 my-1 font-semibold rounded text-base md:text-lg" onclick="answerTest(${index}, ${optIndex})">${String.fromCharCode(65+optIndex)}) ${opt}</button>`;
+            });
+
+            qDiv.innerHTML = `
+                <p class="font-bold text-amber-950 text-lg md:text-xl mb-3">${item.q}</p>
+                <div class="space-y-1">${optionsHtml}</div>
+                <div class="feedback-box" id="test_fb_${index}"></div>
+            `;
+            container.appendChild(qDiv);
+        });
+    }
+
+    function answerTest(qIndex, optIndex) {
+        const item = testData[qIndex];
+        const fb = document.getElementById(`test_fb_${qIndex}`);
+        const qBlock = document.getElementById(`test_q_${qIndex}`);
+        const buttons = qBlock.querySelectorAll('.test-option-btn');
+
+        buttons.forEach(btn => btn.disabled = true);
+
+        if(optIndex === item.correct) {
+            buttons[optIndex].classList.add('selected-correct');
+            fb.style.display = "block";
+            fb.className = "feedback-box correct";
+            fb.innerHTML = `✓ Дұрыс жауап! +1 Домбыра 🪕<br><span class="text-sm md:text-base font-normal"><em>${item.desc}</em></span>`;
+            addScore(1);
+        } else {
+            buttons[optIndex].classList.add('selected-incorrect');
+            buttons[item.correct].classList.add('selected-correct');
+            fb.style.display = "block";
+            fb.className = "feedback-box incorrect";
+            fb.innerHTML = `✗ Қате жауап!<br><strong>Дұрыс жауабы: ${item.options[item.correct]}</strong><br><span class="text-sm md:text-base font-normal"><em>Түсініктеме: ${item.desc}</em></span>`;
+        }
+    }
+
+    window.onload = function() {
+        renderTests();
+    };
+</script>
+
+</body>
+</html>
