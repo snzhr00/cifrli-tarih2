@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ескі фотосуреттер | Цифрлі тарих</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: #FDFBF7;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #2c3e50;
+            min-height: 100vh;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        /* Орнаменты по углам */
+        .oyu {
+            position: fixed;
+            width: 120px;
+            height: 120px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='none' stroke='%23C8A951' stroke-width='3' d='M10,10 C40,10 60,30 60,60 C60,75 50,85 35,85 C20,85 10,75 10,60 C10,45 30,40 45,55 C55,65 50,75 40,75 C30,75 25,65 30,55' /%3E%3Cpath fill='none' stroke='%23C8A951' stroke-width='3' d='M10,10 L10,30 M10,10 L30,10' /%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: contain;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .oyu-top-left { top: 20px; left: 20px; }
+        .oyu-top-right { top: 20px; right: 20px; transform: scaleX(-1); }
+        .oyu-bottom-left { bottom: 20px; left: 20px; transform: scaleY(-1); }
+        .oyu-bottom-right { bottom: 20px; right: 20px; transform: scale(-1, -1); }
+
+        /* Кнопка "Назад" */
+        .back-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            z-index: 100;
+            border: 1px solid #e0e0e0;
+        }
+
+        .back-btn:hover {
+            background-color: #3498db;
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        /* Контейнер для контента */
+        .container {
+            max-width: 1000px;
+            margin: 60px auto 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #1a2a3a;
+        }
+
+        /* Карточки с информацией */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .card img {
+            width: 300px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-content {
+            flex: 1;
+        }
+
+        .card-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #c8a951;
+        }
+
+        .card-content p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .card-content a {
+            display: inline-block;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .card-content a:hover { text-decoration: underline; }
+
+        /* Адаптация для телефонов */
+        @media (max-width: 768px) {
+            .card { flex-direction: column; }
+            .card img { width: 100%; }
+            .oyu { width: 80px; height: 80px; }
+            .back-btn { top: 15px; left: 15px; }
+            h1 { font-size: 2rem; margin-top: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="oyu oyu-top-left"></div>
+    <div class="oyu oyu-top-right"></div>
+    <div class="oyu oyu-bottom-left"></div>
+    <div class="oyu oyu-bottom-right"></div>
+
+    <a href="index.html" class="back-btn">← Артқа</a>
+
+    <div class="container">
+        <h1>Ескі фотосуреттер</h1>
+
+        <div class="card">
+            <img src="images/abylaikhan.jpg" alt="Абылай хан">
+            <div class="card-content">
+                <h2>Абылай хан</h2>
+                <p>Абылай хан мүсінінің ерекшелігі мен жасалу тарихы. Материалы: Көпшілік бұл туындыларды балауыздан жасалған деп ойлайды, бірақ автор (Айдос Есмағамбетов) мәліметінше силикон, шыныпластик және арнайы заманауи материалдарды қолданады. Силикон балауызға қарағанда төзімді, температура өзгерісіне бұзылмайды және адам терісінің құрылымын, түсін дәл беруге мүмкіндік береді. Зерттеу процесі: Абылай ханның мүсінін жасау (алғашқы нұсқалары 2011–2013 жылдары басталған) үлкен ғылыми дайындықты талап етті. Автор Алматыдағы Орталық музейдегі антропологтар қалпына келтірген ханның бас сүйек нұсқасымен танысып, оның бойы, мінез-құлқы туралы деректер жинаған. Хан киімінің матасы мен ондағы ерекше ою-орнақтарға дейін тарихшылармен ақылдаса отырып әзірленген. Хирургиялық дәлдік: Гиперреализм бағытында әрбір деталь — көздің қарашығы, беттегі әжімдер, сақал-мұрттың әр тал талшығы қолмен иненің көмегімен қондырылады, бұл өте үлкен шыдамдылықты қажет етеді.</p>
+                <a href="https://www.facebook.com" target="_blank">Толық оқу (Facebook)</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="images/eskertkish.jpg" alt="Абылайхан ескерткіші">
+            <div class="card-content">
+                <h2>Абылайхан ескерткіші</h2>
+                <p>Абылай хан  ескерткіші.
+Алматы-2 теміржол вокзалының алдындағы алаңда бой көтерген Абылай хан ескерткіші — қаланың басты сәулеттік әрі тарихи нысандарының бірі. Бұл монумент қала қонақтарын қарсы алатын Алматының өзіндік визит картасына айналған.
+Ашылуы: Ескерткіш 2000 жылдың 16 желтоқсанында Қазақстанның Тәуелсіздік күніне орай салтанатты түрде ашылды. Оның ашылу рәсіміне Қазақстанның Тұңғыш Президенті қатысқан.
+Авторлары: Монументтің авторлық ұжымы өте мықты. Бас мүсіншісі — белгілі шебер Нұрлан Далбай (ол Алматыдағы Тәуелсіздік монументі авторларының бірі). Сәулетшілері — Ш. Валиханов, А. Ордабаев, Б. Фабричный және С. Фазылов.
+Композициясы: Абылай хан тұлпар үстінде, асқақ бейнеде бейнеленген. Ханның оң қолында билік пен бірліктің символы — асатаяқ бар. Мүсіншілер ханның айбындылығы мен сабырлылығын, ел қорғаған көшбасшылық мінезін дәл бере білген.
+Материалы мен өлшемдері: Атты мүсін таза қоладан құйылған. Ол қызыл гранитпен қапталған өте биік әрі зәулім тұғырда орналасқан. Тұғырдың төрт жағында Қазақ хандығының бірлігін білдіретін түрлі тарихи рельефтік белгілер мен ою-орнақтар қашалған.</p>
+                <a href="https://kk.wikipedia.org" target="_blank">Толық оқу (Wikipedia)</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="images/shaikas.png" alt="Қазақ әскерін бастаған  Абылай хан жоңғар әскерімен шайқасуда. Сурет ЖИ арқылы жасалынды">
+            <div class="card-content">
+                <h2>Қазақ әскерін бастаған  Абылай хан жоңғар әскерімен шайқасуда. Сурет ЖИ арқылы жасалынды</h2>
+                <p>Абылай ханның (Әбілмансұр) қазақ әскерін бастап, жоңғар шапқыншылығына қарсы жүргізген шайқастары — қазақ тарихының ең даңқты беттерінің бірі. Ол жас кезінен-ақ ерен ерлігімен көзге түсіп, кейіннен бүкіл қазақ қолын біріктірген дарынды қолбасшыға айналды.
+Абылай хан бастаған негізгі шайқастар мен әскери кезеңдер: Шарышпен жекпе-жек және «Абылай» ұраны (1730-жылдар)
+Абылайдың тарих сахнасына шыққан алғашқы үлкен ерлігі жоңғарлармен болған ірі шайқастардың бірінде (тарихи деректерде Аңырақай шайқасы тұсында делінеді) көрініс тапты.
+• Ерлігі: Шайқас алдындағы дәстүрлі жекпе-жекке жоңғар жағынан бас қонтайшы Қалдан Сереннің жақын туысы, атақты әскербасы Шарыш шығады. Қазақ тарапынан «Сабалақ» деген атпен белгісіз болып жүрген 20 жасар Әбілмансұр суырылып шығып, атасының аруағын шақырып, «Абылайлап!» ұрандап жауға шабады.
+• Нәтижесі: Шарыстың басын кесіп, қазақ әскеріне үлкен жігер береді. Осы шайқастан соң ол жалпыхалықтық құрметке ие болып, есімі Абылай хан деп аталып кетті.</p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

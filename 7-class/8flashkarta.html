@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Абылай ханның ішкі және сыртқы саясаты - Флеш-карта ойыны</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f4e8c1;
+            background-image: radial-gradient(#e5d3a1 15%, transparent 16%), radial-gradient(#e5d3a1 15%, transparent 16%);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+            color: #3e2723;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header-box {
+            background-color: #e2c992;
+            border: 3px solid #8d6e63;
+            border-radius: 12px;
+            padding: 20px;
+            width: 100%;
+            max-width: 900px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 26px;
+            margin-top: 0;
+            color: #4e2c0e;
+        }
+        h2 {
+            font-size: 20px;
+            color: #5d4037;
+        }
+        p.info {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+        .score-board {
+            font-size: 22px;
+            font-weight: bold;
+            background: #d7ccc8;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 2px solid #6d4c41;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        .game-container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .card-number {
+            font-size: 22px;
+            font-weight: bold;
+            color: #5d4037;
+            margin-bottom: 15px;
+        }
+        /* 3D Flip Card Styles */
+        .flashcard-scene {
+            width: 100%;
+            height: 320px;
+            perspective: 1000px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .flashcard-card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+        .flashcard-card.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border: 4px solid #6d4c41;
+            border-radius: 15px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: #f5e5c0;
+        }
+        .card-face-front {
+            background: linear-gradient(135deg, #f5e5c0 0%, #ebd7aa 100%);
+        }
+        .card-face-back {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-color: #2e7d32;
+            transform: rotateY(180deg);
+        }
+        .card-label {
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #8d6e63;
+            margin-bottom: 10px;
+        }
+        .card-face-back .card-label {
+            color: #2e7d32;
+        }
+        .question-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c1d11;
+            line-height: 1.4;
+        }
+        .answer-text {
+            font-size: 26px;
+            font-weight: bold;
+            color: #1b5e20;
+            background-color: #d4edda;
+            border: 2px solid #a3e0ab;
+            padding: 18px 25px;
+            border-radius: 12px;
+            line-height: 1.4;
+            width: 90%;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .flip-hint {
+            font-size: 16px;
+            color: #795548;
+            margin-top: 15px;
+            font-style: italic;
+        }
+        .controls-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .action-btn {
+            background-color: #8d6e63;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+        }
+        .action-btn:hover {
+            background-color: #6d4c41;
+            transform: translateY(-2px);
+        }
+        .btn-correct {
+            background-color: #2e7d32;
+        }
+        .btn-correct:hover {
+            background-color: #1b5e20;
+        }
+        .btn-incorrect {
+            background-color: #c62828;
+        }
+        .btn-incorrect:hover {
+            background-color: #b71c1c;
+        }
+        .result-box {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            min-height: 30px;
+            color: #2e7d32;
+        }
+        canvas {
+            background-color: #efebe9;
+            border: 2px solid #8d6e63;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-box">
+        <h1>Сабақтың тақырыбы: Абылай ханның ішкі және сыртқы саясаты</h1>
+        <h2>Зерттеу сұрағы: Дербес Қазақ мемлекетін сақтап қалудағы Абылай ханның рөлі қандай?</h2>
+        <p class="info"><strong>Оқыту мақсаты:</strong> 7.3.1.2 Қазақ хандығының ішкі саяси жағдайын талдау</p>
+        <div class="score-board">
+            Жиналған домбыралар: <span id="dombyra-count">0</span> <span class="dombyra-icon">🪕</span>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <div class="card-number" id="card-num">Флеш-карта: 1 / 25</div>
+
+        <!-- 3D Flip Card -->
+        <div class="flashcard-scene" onclick="flipCard()">
+            <div class="flashcard-card" id="flashcard">
+                <!-- Front Side: Question -->
+                <div class="card-face card-face-front">
+                    <div class="card-label">СҰРАҚ (Алдыңғы беті)</div>
+                    <div class="question-text" id="question-text">Сұрақ жүктелуде...</div>
+                    <div class="flip-hint">💡 Жауабын көру үшін картаны басыңыз</div>
+                </div>
+                <!-- Back Side: Answer in Green -->
+                <div class="card-face card-face-back">
+                    <div class="card-label">ДҰРЫС ЖАУАБЫ (Артқы беті)</div>
+                    <div class="answer-text" id="answer-text">Дұрыс жауап жүктелуде...</div>
+                    <div class="flip-hint">🔄 Алдыңғы бетіне қайту үшін картаны басыңыз</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="result-box" id="result-text"></div>
+
+        <div class="controls-container">
+            <button class="action-btn" id="flip-btn" onclick="flipCard()">Картаны аудару 🔄</button>
+            <button class="action-btn btn-correct" id="correct-btn" onclick="markAnswer(true)" style="display: none;">Дұрыс таптым 🪕 (+1 домбыра)</button>
+            <button class="action-btn btn-incorrect" id="incorrect-btn" onclick="markAnswer(false)" style="display: none;">Қате таптым</button>
+            <button class="action-btn" id="next-btn" onclick="nextQuestion()" style="display: none;">Келесі флеш-карта ➡️</button>
+        </div>
+
+        <div>
+            <canvas id="dombyraCanvas" width="300" height="80"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const flashcards = [
+            {
+                q: "1. Абылай хан Түркістан қаласында қай жылы дүниеге келді?",
+                a: "1711 (кейбір деректерде 1713) жылы"
+            },
+            {
+                q: "2. Абылай ханның азан шақырып қойылған аты кім болған?",
+                a: "Әбілмансұр"
+            },
+            {
+                q: "3. Абылай неше жасқа толған кезінен бастап жоңғар басқыншыларына қарсы соғысқа белсене қатысты?",
+                a: "15 жасқа толған кезінен бастап"
+            },
+            {
+                q: "4. Абылай ханның сырт келбеті мен дене бітімі мәтінде қалай сипатталған?",
+                a: "Бойы ортадан жоғары, жауырыны қақпақтай, дене күші зор"
+            },
+            {
+                q: "5. 1733 жылы Әбілмамбет хан жасағының құрамында Абылай қай жоңғар қолбасшысын жекпе-жекте жеңді?",
+                a: "Шарышты"
+            },
+            {
+                q: "6. Абылай шамамен XVIII ғасырдың 30-жылдарының басында қай ұлысты басқарды?",
+                a: "Атығай ұлысын"
+            },
+            {
+                q: "7. Абылайдың бүкіл ішкі саяси қызметі неге бағытталды?",
+                a: "Бір орталықтан басқарылатын тәуелсіз мемлекет құруға"
+            },
+            {
+                q: "8. Ш. Уәлиханов Абылай хан туралы не деп жазды?",
+                a: "«Қазақтардың аңыз-әңгімелерінде Абылай айрықша қасиеті бар киелі, керемет құдірет иесі болып саналады»"
+            },
+            {
+                q: "9. 1759 жылы патша үкіметінің әкімшілігі Абылайға қандай ұсыныс жасады?",
+                a: "Әбілмамбетті тағынан тайдырып, оның орнына Абылайдың отыруын ұсынды"
+            },
+            {
+                q: "10. Абылай не себепті 1759 жылы патша үкіметінің Әбілмамбеттің орнына отыру ұсынысын қабыл алмады?",
+                a: "Ол ұсыныс елдің өз ішінде қазақтардың бірлігін ыдыратуға соқтыратын еді"
+            },
+            {
+                q: "11. Абылай қай жылы Түркістан қаласында қазақтың бүкіл үш жүзінің ханы болып жарияланды?",
+                a: "1771 жылы"
+            },
+            {
+                q: "12. Патша үкіметі 1778 жылы Абылайды қандай дәрежеде таныды?",
+                a: "Тек Орта жүздің ханы деп таныды"
+            },
+            {
+                q: "13. Абылай не себепті орыс патшасының тағына тағзым етіп, ант беруге барудан бас тартты?",
+                a: "«Мені хан етіп сайлаған халқым, олай болса, орыс патшасының тағына тағзым етіп, ант беруге міндетті емеспін» деп білді"
+            },
+            {
+                q: "14. Абылай хан әкімшілік билікті жүргізу үшін Жетісу жеріне кімдерді сұлтан етіп тағайындады?",
+                a: "Әділ мен Сүйік сұлтандарды"
+            },
+            {
+                q: "15. Абылай ханның сенімді саяси тұлғасы әрі кеңесшісі кім болды?",
+                a: "Бұқар жырау"
+            },
+            {
+                q: "16. Абылай хан шаруашылық саласында қандай кәсіптерге қолдау көрсетті?",
+                a: "Егіншілікке, шөп шабуға және балық аулауға"
+            },
+            {
+                q: "17. Қазақ даласында теміршілік ұстаханаларын салудың бастамашысы кім болды?",
+                a: "Абылай хан"
+            },
+            {
+                q: "18. Абылай ханның сыртқы саяси қызметі неге бағытталды?",
+                a: "Қазақстан аумағының ешкім қол сұға алмайтын тұтастығын қамтамасыз етуге"
+            },
+            {
+                q: "19. Абылай хан қай жылы жоңғарлардың тұтқиылдан баса-көктеп кіруі салдарынан тұтқынға түсіп қалды?",
+                a: "1741 жылы"
+            },
+            {
+                q: "20. Абылай жоңғарлардың тақтан үміткер мұрагерлеріне қолдау көрсету арқылы не істеді?",
+                a: "Жауын әлсіретіп, Қазақстанның оңтүстік және оңтүстік-шығыс аудандарын қайтарып алуға септігін тигізді"
+            },
+            {
+                q: "21. 1761 жылы Қытай Жоңғариядағы жағдайын нығайту үшін қандай аймақ құрды?",
+                a: "Синьцзянь немесе Шыңжаң (Жаңашеп)"
+            },
+            {
+                q: "22. 1771 жылы Қытай шебіне көшуге әрекет жасаған Еділ қалмақтарының жалпы саны қанша еді?",
+                a: "180 мың адам"
+            },
+            {
+                q: "23. Абылай бастаған қалың қолдың қалмақтарға ойсырата соққы берген оқиғасы қазақ тарихында қандай атпен қалды?",
+                a: "«Шанды жорық»"
+            },
+            {
+                q: "24. Мәтіндегі сөздік бойынша «Керуен» деген не?",
+                a: "Алыс жерге жүк тасуға немесе сауда жасауға арналған көлік тізбегі"
+            },
+            {
+                q: "25. 1755 жылы қытайдың Цин империясына қарсы көтеріліс ұйымдастырған жоңғар нойоны кім?",
+                a: "Әмірсана"
+            }
+        ];
+
+        let currentCard = 0;
+        let isFlipped = false;
+        let score = 0;
+        let answeredCurrent = false;
+
+        function loadQuestion() {
+            isFlipped = false;
+            answeredCurrent = false;
+            
+            const cardElem = document.getElementById("flashcard");
+            cardElem.classList.remove("is-flipped");
+
+            document.getElementById("result-text").innerText = "";
+            document.getElementById("correct-btn").style.display = "none";
+            document.getElementById("incorrect-btn").style.display = "none";
+            document.getElementById("next-btn").style.display = "none";
+            document.getElementById("flip-btn").style.display = "inline-block";
+
+            const card = flashcards[currentCard];
+            document.getElementById("card-num").innerText = `Флеш-карта: ${currentCard + 1} / ${flashcards.length}`;
+            document.getElementById("question-text").innerText = card.q;
+            document.getElementById("answer-text").innerText = card.a;
+
+            drawDombyra();
+        }
+
+        function flipCard() {
+            const cardElem = document.getElementById("flashcard");
+            isFlipped = !isFlipped;
+            if (isFlipped) {
+                cardElem.classList.add("is-flipped");
+                if (!answeredCurrent) {
+                    document.getElementById("correct-btn").style.display = "inline-block";
+                    document.getElementById("incorrect-btn").style.display = "inline-block";
+                }
+            } else {
+                cardElem.classList.remove("is-flipped");
+            }
+        }
+
+        function markAnswer(isCorrect) {
+            if (answeredCurrent) return;
+            answeredCurrent = true;
+
+            const resultElem = document.getElementById("result-text");
+            if (isCorrect) {
+                score++;
+                document.getElementById("dombyra-count").innerText = score;
+                resultElem.innerText = "Тамаша! 🪕 +1 домбыра ұтып алдыңыз!";
+                drawDombyra(true);
+            } else {
+                resultElem.innerText = "Келесі жолы міндетті түрде дұрыс табасыз!";
+            }
+
+            document.getElementById("correct-btn").style.display = "none";
+            document.getElementById("incorrect-btn").style.display = "none";
+            document.getElementById("next-btn").style.display = "inline-block";
+        }
+
+        function nextQuestion() {
+            currentCard++;
+            if (currentCard < flashcards.length) {
+                loadQuestion();
+            } else {
+                document.getElementById("card-num").innerText = "Ойын аяқталды!";
+                document.getElementById("question-text").innerText = `Құттықтаймыз! Сіз барлық 25 флеш-картаны толық аяқтадыңыз!`;
+                document.getElementById("answer-text").innerText = `Жинаған жалпы домбыра саны: ${score} 🪕`;
+                document.getElementById("flip-btn").style.display = "none";
+                document.getElementById("correct-btn").style.display = "none";
+                document.getElementById("incorrect-btn").style.display = "none";
+                document.getElementById("next-btn").style.display = "none";
+                document.getElementById("result-text").innerText = "";
+            }
+        }
+
+        function drawDombyra(animated = false) {
+            const canvas = document.getElementById("dombyraCanvas");
+            const ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Пернелі шанақ
+            ctx.fillStyle = "#8d6e63";
+            ctx.strokeStyle = "#4e2c0e";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.ellipse(70, 40, 30, 25, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Мойны
+            ctx.fillStyle = "#d7ccc8";
+            ctx.fillRect(95, 36, 150, 8);
+
+            // Басы
+            ctx.fillStyle = "#8d6e63";
+            ctx.beginPath();
+            ctx.arc(250, 40, 12, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Ішектері
+            ctx.strokeStyle = "#3e2723";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(50, 37);
+            ctx.lineTo(250, 37);
+            ctx.moveTo(50, 43);
+            ctx.lineTo(250, 43);
+            ctx.stroke();
+
+            // Тиек
+            ctx.fillStyle = "#3e2723";
+            ctx.fillRect(60, 32, 5, 16);
+
+            // Жазу
+            ctx.fillStyle = "#ffe0b2";
+            ctx.font = "bold 13px Arial";
+            ctx.fillText("Домбыра", 42, 45);
+
+            if (animated) {
+                ctx.fillStyle = "#2e7d32";
+                ctx.font = "bold 16px Arial";
+                ctx.fillText("+1 🪕 Сыйлық!", 190, 25);
+            }
+        }
+
+        window.onload = () => {
+            loadQuestion();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Абылай ханның ішкі және сыртқы саясаты</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        body {
+            background-color: #f4e8c1;
+            background-image: 
+                radial-gradient(#dcb886 15%, transparent 16%), 
+                radial-gradient(#dcb886 15%, transparent 16%);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+            color: #3b2314;
+            margin: 0;
+            padding: 20px;
+            font-size: 19px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            background: #fdf8e9;
+            border: 5px double #7a4e28;
+            box-shadow: 0 0 25px rgba(61, 35, 15, 0.35);
+            border-radius: 14px;
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #573318;
+            font-size: 32px;
+            margin-top: 0;
+            border-bottom: 2px solid #8c5b30;
+            padding-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #573318;
+            font-size: 24px;
+            border-bottom: 2px dashed #b88d5e;
+            padding-bottom: 8px;
+            margin-top: 5px;
+        }
+        .lesson-info {
+            background: #eadaad;
+            padding: 18px;
+            border-radius: 10px;
+            border: 2px solid #9c7143;
+            margin-bottom: 25px;
+            font-size: 20px;
+        }
+        .lesson-info strong {
+            color: #42240c;
+        }
+        .dombyra-counter {
+            position: sticky;
+            top: 15px;
+            background: linear-gradient(135deg, #8c5b30, #573318);
+            color: #fff8eb;
+            padding: 14px 24px;
+            border-radius: 40px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            margin-bottom: 25px;
+            border: 2px solid #f0d59e;
+        }
+        .task-card {
+            background: #faf2dc;
+            border: 2px solid #a87e51;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .descriptor {
+            background: #ebdaaa;
+            padding: 14px 18px;
+            border-left: 6px solid #7a4e28;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+        .btn {
+            background: #7a4e28;
+            color: #ffffff;
+            border: none;
+            padding: 14px 26px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 18px;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .btn:hover {
+            background: #573318;
+            transform: translateY(-2px);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .correct-ans {
+            color: #145a23;
+            background-color: #d4edda;
+            border: 2px solid #b1dfbb;
+            padding: 14px;
+            margin-top: 10px;
+            border-radius: 8px;
+            font-size: 19px;
+            font-weight: bold;
+        }
+        .wrong-ans {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 2px solid #f5c6cb;
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 8px;
+            font-size: 18px;
+        }
+        .q-item {
+            margin-bottom: 22px;
+            padding-bottom: 16px;
+            border-bottom: 1px dashed #b88d5e;
+            font-size: 20px;
+        }
+        .q-item p {
+            margin: 8px 0;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 18px;
+            margin-top: 8px;
+            border: 2px solid #a87e51;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #2b180a;
+        }
+        label {
+            cursor: pointer;
+            margin-right: 18px;
+            display: inline-block;
+            margin-top: 6px;
+        }
+        input[type="radio"] {
+            transform: scale(1.3);
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        .test-opt {
+            margin: 8px 0;
+            font-size: 19px;
+        }
+        .explanation {
+            font-size: 17px;
+            color: #0b4717;
+            margin-top: 6px;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Тарихи интерактивті тапсырмалар</h1>
+    
+    <div class="lesson-info">
+        <strong>Сабақтың тақырыбы:</strong> Абылай ханның ішкі және сыртқы саясаты<br>
+        <strong>Зерттеу сұрағы:</strong> Дербес Қазақ мемлекетін сақтап қалудағы Абылай ханның рөлі қандай?<br>
+        <strong>Оқыту мақсаты:</strong> 7.3.1.2 Қазақ хандығының ішкі саяси жағдайын талдау
+    </div>
+
+    <div class="dombyra-counter" id="dombyraCounter">
+        Жинаған сыйлығыңыз: 0 🪕 (Домбыра)
+    </div>
+
+    <div class="task-card">
+        <h2>1-тапсырма: Ақиқат немесе Жалған (5 сұрақ)</h2>
+        <div id="t1-container">
+            <div class="q-item">
+                <p><strong>1.</strong> Абылай ханның азан шақырып қойылған аты – Әбілмансұр.</p>
+                <label><input type="radio" name="tf0" value="Ақиқат"> Ақиқат</label>
+                <label><input type="radio" name="tf0" value="Жалған"> Жалған</label>
+                <div id="tf-fb-0"></div>
+            </div>
+            <div class="q-item">
+                <p><strong>2.</strong> Абылай 1733 жылы «Абылайлап» ұрандап шығып, Шарышты жеңді.</p>
+                <label><input type="radio" name="tf1" value="Ақиқат"> Ақиқат</label>
+                <label><input type="radio" name="tf1" value="Жалған"> Жалған</label>
+                <div id="tf-fb-1"></div>
+            </div>
+            <div class="q-item">
+                <p><strong>3.</strong> 1759 жылы патша үкіметі Әбілмәмбетті тағынан тайдырғанда Абылай бұл ұсынысты бірден қабыл алды.</p>
+                <label><input type="radio" name="tf2" value="Ақиқат"> Ақиқат</label>
+                <label><input type="radio" name="tf2" value="Жалған"> Жалған</label>
+                <div id="tf-fb-2"></div>
+            </div>
+            <div class="q-item">
+                <p><strong>4.</strong> Патша үкіметі 1778 жылы Абылайды бүкіл үш жүздің ханы деп таныды.</p>
+                <label><input type="radio" name="tf3" value="Ақиқат"> Ақиқат</label>
+                <label><input type="radio" name="tf3" value="Жалған"> Жалған</label>
+                <div id="tf-fb-3"></div>
+            </div>
+            <div class="q-item">
+                <p><strong>5.</strong> Абылай хан қазақ даласында теміршілік ұстаханаларын салудың бастамашысы болды.</p>
+                <label><input type="radio" name="tf4" value="Ақиқат"> Ақиқат</label>
+                <label><input type="radio" name="tf4" value="Жалған"> Жалған</label>
+                <div id="tf-fb-4"></div>
+            </div>
+        </div>
+        <button class="btn" onclick="checkTask1()">Тексеру</button>
+        <div class="descriptor">
+            <strong>Дескриптор:</strong> Абылай ханның өмірі мен ішкі-сыртқы саясатына қатысты деректердің ақиқат немесе жалған екенін анықтайды.
+        </div>
+    </div>
+
+    <div class="task-card">
+        <h2>2-тапсырма: Блум таксономиясы бойынша тапсырмалар</h2>
+        <div class="q-item">
+            <p><strong>1. Білу:</strong> Абылай хан қай қалада дүниеге келді?</p>
+            <input type="text" id="bloom0" placeholder="Жауабыңызды жазыңыз...">
+            <div id="bloom-fb-0"></div>
+        </div>
+        <div class="q-item">
+            <p><strong>2. Түсіну:</strong> Абылай хан не себепті орыс патшасына барып ант беруден бас тартты?</p>
+            <select id="bloom1">
+                <option value="">-- Жауапты таңдаңыз --</option>
+                <option value="1">Ресей империясынан қорыққандықтан</option>
+                <option value="2">«Мені хан етіп сайлаған халқым, олай болса, орыс патшасының тағына тағзым етіп, ант беруге міндетті емеспін» деп білгендіктен</option>
+                <option value="3">Денсаулығы жарамағандықтан</option>
+            </select>
+            <div id="bloom-fb-1"></div>
+        </div>
+        <div class="q-item">
+            <p><strong>3. Қолдану:</strong> Абылай хан Жетісу жерін басқаруға қай сұлтандарды тағайындады?</p>
+            <input type="text" id="bloom2" placeholder="Сұлтандардың есімдерін жазыңыз...">
+            <div id="bloom-fb-2"></div>
+        </div>
+        <div class="q-item">
+            <p><strong>4. Талдау:</strong> Абылай ханның ішкі саясатындағы басты бағыттарды талдап, дұрыс кешенді шешімді таңдаңыз:</p>
+            <select id="bloom3">
+                <option value="">-- Жауапты таңдаңыз --</option>
+                <option value="1">Тек әскери күшке сүйеніп, шаруашылықты шектеу</option>
+                <option value="2">Бір орталықтан басқарылатын мемлекет құру, егіншілік, керуен саудасы мен ұстаханаларды қолдау, барымтаны тоқтату</option>
+                <option value="3">Сыртқы елдердің барлық талаптарын сөзсіз орындау</option>
+            </select>
+            <div id="bloom-fb-3"></div>
+        </div>
+        <button class="btn" onclick="checkTask2()">Тексеру</button>
+        <div class="descriptor">
+            <strong>Дескриптор:</strong> Блум таксономиясының деңгейлеріне (білу, түсіну, қолдану, талдау) сәйкес Абылай ханның қайраткерлігін талдайды.
+        </div>
+    </div>
+
+    <div class="task-card">
+        <h2>3-тапсырма: Кілт сөздерді табу (5 негізгі оқиға)</h2>
+        <div class="q-item">
+            <p><strong>1-сұрақ:</strong> Жоңғарлармен болған соғыстарда Абылай ханның бас кеңесшісі әрі ақылшысы болған атақты жырау кім?</p>
+            <input type="text" id="kw0" placeholder="Жасырын сөзді жазыңыз...">
+            <div id="kw-fb-0"></div>
+        </div>
+        <div class="q-item">
+            <p><strong>2-сұрақ:</strong> 1771 жылы Еділ қалмақтарының Қытайға көшуі кезіндегі қазақтармен болған ірі шайқастар тарихта қандай атпен қалды?</p>
+            <input type="text" id="kw1" placeholder="Жасырын сөзді жазыңыз...">
+            <div id="kw-fb-1"></div>
+        </div>
+        <div class="q-item">
+            <p><strong>3-сұрақ:</strong> Абылай хан шамамен XVIII ғасырдың 30-жылдарының басында қай ұлысты басқарды?</p>
+            <input type="text" id="kw2" placeholder="Жасырын сөзді жазыңыз...">
+            <div id="kw-fb-2"></div>
+        </div>
+        <div class="q-item">
+            <p><strong>4-сұрақ:</strong> Ресей билеушілері Абылайды ұстап алып, қай бекініске қамауды ұсынды?</p>
+            <input type="text" id="kw3" placeholder="Жасырын сөзді жазыңыз...">
+            <div id="kw-fb-3"></div>
+        </div>
+        <div class="q-item">
+            <p><strong>5-сұрақ:</strong> 1761 жылы Қытай Жоңғариядағы жағдайын нығайту үшін құрған аймақ (Шыңжаң) қалай аталды?</p>
+            <input type="text" id="kw4" placeholder="Жасырын сөзді жазыңыз...">
+            <div id="kw-fb-4"></div>
+        </div>
+        <button class="btn" onclick="checkTask3()">Тексеру</button>
+        <div class="descriptor">
+            <strong>Дескриптор:</strong> Сұрақтарға жауап беру арқылы мәтіндегі жасырын 5 негізгі кілт сөзді анықтайды.
+        </div>
+    </div>
+
+    <div class="task-card">
+        <h2>4-тапсырма: Хронологиялық сәйкестендіру</h2>
+        <p>Берілген жылдарда қандай тарихи оқиғалар болғанын жазыңыз:</p>
+        <div class="q-item">
+            <p><strong>1711 жыл (кейбір деректерде 1713 жыл):</strong></p>
+            <input type="text" id="chrono0" placeholder="Болған оқиғаны жазыңыз...">
+            <div id="chrono-fb-0"></div>
+        </div>
+        <div class="q-item">
+            <p><strong>1733 жыл:</strong></p>
+            <input type="text" id="chrono1" placeholder="Болған оқиғаны жазыңыз...">
+            <div id="chrono-fb-1"></div>
+        </div>
+        <div class="q-item">
+            <p><strong>1741 жыл:</strong></p>
+            <input type="text" id="chrono2" placeholder="Болған оқиғаны жазыңыз...">
+            <div id="chrono-fb-2"></div>
+        </div>
+        <div class="q-item">
+            <p><strong>1759 жыл:</strong></p>
+            <input type="text" id="chrono3" placeholder="Болған оқиғаны жазыңыз...">
+            <div id="chrono-fb-3"></div>
+        </div>
+        <div class="q-item">
+            <p><strong>1771 жыл:</strong></p>
+            <input type="text" id="chrono4" placeholder="Болған оқиғаны жазыңыз...">
+            <div id="chrono-fb-4"></div>
+        </div>
+        <div class="q-item">
+            <p><strong>1778 жыл:</strong></p>
+            <input type="text" id="chrono5" placeholder="Болған оқиғаны жазыңыз...">
+            <div id="chrono-fb-5"></div>
+        </div>
+        <button class="btn" onclick="checkTask4()">Тексеру</button>
+        <div class="descriptor">
+            <strong>Дескриптор:</strong> Мәтінде берілген барлық хронологиялық жылдарға сәйкес оқиғаларды дұрыс сипаттайды.
+        </div>
+    </div>
+
+    <div class="task-card">
+        <h2>Тарихи тест (20 сұрақ)</h2>
+        <div id="test-container"></div>
+    </div>
+
+</div>
+
+<script>
+let dombyraCount = 0;
+let scoredQuestions = {};
+
+function addDombyra(key) {
+    if (!scoredQuestions[key]) {
+        scoredQuestions[key] = true;
+        dombyraCount++;
+        document.getElementById('dombyraCounter').innerText = `Жинаған сыйлығыңыз: ${dombyraCount} 🪕 (Домбыра)`;
+    }
+}
+
+function checkTask1() {
+    const answers = ["Ақиқат", "Ақиқат", "Жалған", "Жалған", "Ақиқат"];
+    const explanations = [
+        "Дұрыс! Абылайдың азан шақырып қойылған аты Әбілмансұр болған.",
+        "Дұрыс! 1733 жылы Әбілмәмбет хан жасағының құрамында жекпе-жекте Шарышты жеңді.",
+        "Дұрыс! Абылай патша үкіметінің бұл ұсынысын қабыл алмады.",
+        "Дұрыс! Патша үкіметі 1778 жылы Абылайды тек Орта жүздің ханы деп таныды.",
+        "Дұрыс! Абылай қазақ даласында теміршілік ұстаханаларын салудың бастамашысы болды."
+    ];
+
+    for (let i = 0; i < 5; i++) {
+        let radios = document.getElementsByName('tf' + i);
+        let selected = "";
+        for (let r of radios) {
+            if (r.checked) selected = r.value;
+        }
+        let fb = document.getElementById('tf-fb-' + i);
+        if (selected === answers[i]) {
+            fb.innerHTML = `<div class="correct-ans">Дұрыс! (${answers[i]}) - ${explanations[i]}</div>`;
+            addDombyra('tf' + i);
+        } else {
+            fb.innerHTML = `<div class="wrong-ans">Қате! Дұрыс жауабы: ${answers[i]}. <br>${explanations[i]}</div>`;
+        }
+    }
+}
+
+function checkTask2() {
+    // 1. Түркістан
+    let b0 = document.getElementById('bloom0').value.trim().toLowerCase();
+    let fb0 = document.getElementById('bloom-fb-0');
+    if (b0.includes("түркістан") || b0.includes("туркистан")) {
+        fb0.innerHTML = `<div class="correct-ans">Дұрыс! Абылай Түркістан қаласында дүниеге келді.</div>`;
+        addDombyra('bloom0');
+    } else {
+        fb0.innerHTML = `<div class="wrong-ans">Қате! Дұрыс жауабы: Түркістан қаласы.</div>`;
+    }
+
+    // 2. Бас тарту себебі
+    let b1 = document.getElementById('bloom1').value;
+    let fb1 = document.getElementById('bloom-fb-1');
+    if (b1 === "2") {
+        fb1.innerHTML = `<div class="correct-ans">Дұрыс! Хан: «Мені хан етіп сайлаған халқым, олай болса, орыс патшасының тағына тағзым етіп, ант беруге міндетті емеспін» деп білді.</div>`;
+        addDombyra('bloom1');
+    } else {
+        fb1.innerHTML = `<div class="wrong-ans">Қате! Дұрыс жауабы: Хан халық сайлағандықтан орыс патшасына тағзым етуге міндетті емеспін деп санады.</div>`;
+    }
+
+    // 3. Әділ мен Сүйік
+    let b2 = document.getElementById('bloom2').value.trim().toLowerCase();
+    let fb2 = document.getElementById('bloom-fb-2');
+    if (b2.includes("әділ") && b2.includes("сүйік")) {
+        fb2.innerHTML = `<div class="correct-ans">Дұрыс! Жетісу жерін Әділ мен Сүйік сұлтандарға берді.</div>`;
+        addDombyra('bloom2');
+    } else {
+        fb2.innerHTML = `<div class="wrong-ans">Қате! Дұрыс жауабы: Әділ мен Сүйік сұлтандар.</div>`;
+    }
+
+    // 4. Ішкі саясат
+    let b3 = document.getElementById('bloom3').value;
+    let fb3 = document.getElementById('bloom-fb-3');
+    if (b3 === "2") {
+        fb3.innerHTML = `<div class="correct-ans">Дұрыс! Абылай ішкі саясатында бір орталықтан басқарылатын мемлекет құрды, егіншілік пен керуен саудасын, ұстаханаларды қолдады, барымтаны тоқтатты.</div>`;
+        addDombyra('bloom3');
+    } else {
+        fb3.innerHTML = `<div class="wrong-ans">Қате! Дұрыс жауабы: Бір орталықтан басқарылатын мемлекет құрып, шаруашылықты дамытты, барымтаны тоқтатты.</div>`;
+    }
+}
+
+function checkTask3() {
+    const keys = [
+        { id: 'kw0', ans: 'бұқар жырау', full: 'Бұқар жырау' },
+        { id: 'kw1', ans: 'шаңды жорық', full: 'Шаңды жорық' },
+        { id: 'kw2', ans: 'атығай', full: 'Атығай' },
+        { id: 'kw3', ans: 'омбы', full: 'Омбы' },
+        { id: 'kw4', ans: 'синьцзянь', full: 'Синьцзянь (Шыңжаң)' }
+    ];
+
+    keys.forEach((k, idx) => {
+        let val = document.getElementById(k.id).value.trim().toLowerCase();
+        let fb = document.getElementById('kw-fb-' + idx);
+        if (val.includes(k.ans) || (idx === 4 && val.includes("шыңжаң"))) {
+            fb.innerHTML = `<div class="correct-ans">Дұрыс! Жасырын сөз: ${k.full}</div>`;
+            addDombyra('kw' + idx);
+        } else {
+            fb.innerHTML = `<div class="wrong-ans">Қате! Дұрыс жасырын сөз: ${k.full}</div>`;
+        }
+    });
+}
+
+function checkTask4() {
+    const chronos = [
+        { id: 'chrono0', kw: ['дүниеге', 'туған', 'түркістан', 'туды'], ans: 'Абылай хан Түркістан қаласында дүниеге келді.' },
+        { id: 'chrono1', kw: ['шарыш', 'ұран', 'абылайлап', 'жекпе-жек'], ans: '«Абылайлап» ұрандап шығып, Жоңғар қолбасшысы Шарышты жеңді.' },
+        { id: 'chrono2', kw: ['тұтқын', 'жорық', 'қазақтарға'], ans: 'Жоңғарлар қазақтарға қарсы ірі жорыққа шығып, Абылай тұтқынға түсті.' },
+        { id: 'chrono3', kw: ['әбілмәмбет', 'патша', 'тағынан', 'ұсынды'], ans: 'Патша үкіметінің әкімшілігі Әбілмәмбетті тағынан тайдырып, орнына Абылайды отырғызуды ұсынды.' },
+        { id: 'chrono4', kw: ['хан', 'шаңды жорық', 'қалмақ', 'үш жүз'], ans: 'Түркістанда үш жүздің ханы болып жарияланды және Еділ қалмақтары талқандалған «Шаңды жорық» өтті.' },
+        { id: 'chrono5', kw: ['орта жүз', 'патша', 'таныды'], ans: 'Патша үкіметі Абылайды бір ғана Орта жүздің ханы деп таныды.' }
+    ];
+
+    chronos.forEach((c, idx) => {
+        let val = document.getElementById(c.id).value.trim().toLowerCase();
+        let fb = document.getElementById('chrono-fb-' + idx);
+        let isCorrect = c.kw.some(k => val.includes(k));
+        if (isCorrect) {
+            fb.innerHTML = `<div class="correct-ans">Дұрыс! Оқиға: ${c.ans}</div>`;
+            addDombyra('chrono' + idx);
+        } else {
+            fb.innerHTML = `<div class="wrong-ans">Қате! Бұл жылы болған оқиға: ${c.ans}</div>`;
+        }
+    });
+}
+
+const testData = [
+    {
+        q: "1. Абылай ханның бойы мен сырт келбеті оқулықта қалай сипатталған?",
+        opts: ["Бойы аласа, арық келген", "Бойы ортадан жоғары, жауырыны қақпақтай, дене күші зор", "Бойы өте сұңғақ, әлсіз", "Сырт келбеті туралы деректер сақталмаған"],
+        ans: 1,
+        exp: "Оқулықта: «Оның бойы ортадан жоғары болатын. Жауырыны қақпақтай, дене күші зор еді» деп жазылған."
+    },
+    {
+        q: "2. Абылай неше жасынан бастап жоңғар басқыншыларына қарсы соғысқа белсене қатысты?",
+        opts: ["10 жас", "12 жас", "15 жас", "20 жас"],
+        ans: 2,
+        exp: "Оқулық мәтіні бойынша: «Он бес жасқа толған кезінен бастап жоңғар басқыншыларына қарсы соғысқа белсене қатысты»."
+    },
+    {
+        q: "3. Ш. Уәлиханов Абылай хан туралы не деп жазды?",
+        opts: ["«Абылай тек әскери қолбасшы болды»", "«Қазақтардың аңыз-әңгімелерінде Абылай айрықша қасиеті бар киелі, керемет құдірет иесі болып саналады»", "«Абылай Ресейге толық бағынышты болды»", "«Абылай тек Орта жүзді қатаң биледі»"],
+        ans: 1,
+        exp: "Ш. Уәлиханов: «Қазақтардың аңыз-әңгімелерінде Абылай айрықша қасиеті бар киелі, керемет құдірет иесі болып саналады. Ешбір ханның Абылайдай шексіз билікке қолы жеткен жоқ»."
+    },
+    {
+        q: "4. Абылай Орталық Қазақстанды басқаруды қай сұлтанға тапсырды?",
+        opts: ["Әділ сұлтанға", "Қасым сұлтанға", "Сұлтанымамет сұлтанға", "Әбілпейізге"],
+        ans: 1,
+        exp: "Мәтін бойынша: «Орталық Қазақстанды – Қасым сұлтанға тапсырды»."
+    },
+    {
+        q: "5. Ертіс өңірін басқару Абылайдың қай сенімді серігіне берілді?",
+        opts: ["Сұлтанымамет сұлтанға", "Әбілпейіз сұлтанға", "Сүйік сұлтанға", "Қасым сұлтанға"],
+        ans: 0,
+        exp: "Мәтін бойынша: «Ертіс өңірін – немере ағасы әрі сенімді серігі Сұлтанымамет сұлтанға берді»."
+    },
+    {
+        q: "6. Абылай Шығыс Қазақстанды басқаруды кімге тапсырды?",
+        opts: ["Әбілмәмбет сұлтанның ұлы Әбілпейізге", "Қасым сұлтанға", "Сүйік сұлтанға", "Әділ сұлтанға"],
+        ans: 0,
+        exp: "Мәтін бойынша: «Шығыс Қазақстанды Әбілмәмбет сұлтанның ұлы Әбілпейізге әкімшілік билікке берді»."
+    },
+    {
+        q: "7. Абылай хан өзінің ішкі билігінде кімдерге сүйенді?",
+        opts: ["Тек шетелдік елшілерге", "Адал төлеңгіттердің, батырлар мен билердің жасақтарына", "Тек ресейлік әскерлерге", "Тек жоңғар нойондарына"],
+        ans: 1,
+        exp: "Оқулықта: «Хан өз билігін адал төлеңгіттердің, батырлар мен билердің жасақтарына сүйене отырып жүзеге асырды»."
+    },
+    {
+        q: "8. Ресей империясы Абылайдың ықпалын әлсірету үшін оның орнына қай жүздің ханын тағайындауды ойластырды?",
+        opts: ["Ұлы жүз ханын", "Кіші жүз ханы Нұралы мен оның ұрпақтарын", "Орта жүздің басқа сұлтанын", "Жоңғар билеушісін"],
+        ans: 1,
+        exp: "Мәтін бойынша: «Олардың орнына Кіші жүз ханы Нұралы және оның ұрпақтары сияқты қазақ элитасының Ресейге адал өкілдерін тағайындауды ойластырды»."
+    },
+    {
+        q: "9. Абылайды тұтқыннан босатып алу неден кейін ғана мүмкін болды?",
+        opts: ["Қазақтар үлкен төлем төлегеннен кейін", "Жоңғар мемлекетімен бейбіт келісім жасалғаннан соң", "Ресей әскері жоңғарларды жеңген соң", "Қытай әскері араласқан соң"],
+        ans: 1,
+        exp: "Оқулық бойынша: «Абылайды тұтқыннан босатып алу Жоңғар мемлекетімен бейбіт келісім жасалғаннан соң ғана мүмкін болды»."
+    },
+    {
+        q: "10. Жоңғар билеушісі Галдан-Церен қайтыс болғаннан кейін не басталды?",
+        opts: ["Жоңғарлар қазақтарға толық бағынды", "Оның мұрагерлері арасында кескілескен тақ таласы басталды", "Жоңғария біржолата жойылды", "Қазақтар жоңғарлармен одақтасты"],
+        ans: 1,
+        exp: "Мәтінде: «Галдан-Церен қайтыс болғаннан кейін, оның мұрагерлері арасында кескілескен тақ таласы басталды»."
+    },
+    {
+        q: "11. 1771 жылы Еділ қалмақтарының жалпы саны қанша адам еді?",
+        opts: ["50 мың", "100 мың", "180 мың", "250 мың"],
+        ans: 2,
+        exp: "Мәтінде: «1771 жылы жалпы саны 180 мың адам болатын Еділ қалмақтары Қытай шебіне көшуге әрекет жасады»."
+    },
+    {
+        q: "12. Қазақтардың қалмақтармен ең ірі шайқастары қай жерлерде өтті?",
+        opts: ["Жем өзені бойында, Балқаш көлінің жағасында", "Ертіс өзенінде", "Сырдар бойында", "Жайық өзені жағасында"],
+        ans: 0,
+        exp: "Оқулықта: «Қазақтардың қалмақтармен ең ірі шайқасы Жем өзені бойында, Балқаш көлінің жағасында өтті»."
+    },
+    {
+        q: "13. «Шежіре» сөзінің анықтамасы қандай?",
+        opts: ["Ескерткіш құлпытас", "Қазақтардың генеалогиялық кестесі, тарихи жылнама", "Қырғыз билеушілері", "Сауда жасауға арналған көлік тізбегі"],
+        ans: 1,
+        exp: "Мәтін соңындағы сөздікте: «Шежіре – қазақтардың генеалогиялық кестесі, тарихи жылнама»."
+    },
+    {
+        q: "14. «Стела» дегеніміз не?",
+        opts: ["Ескерткіш құлпытас", "Тарихи жылнама", "Көлік тізбегі", "Билеуші титулы"],
+        ans: 0,
+        exp: "Сөздік бойынша: «Стела – ескерткіш құлпытас»."
+    },
+    {
+        q: "15. «Манап» деген кімдер?",
+        opts: ["Қазақ билері", "Қырғыз билеушілері мен қолбасшылары", "Жоңғар нойондары", "Орыс шенеуніктері"],
+        ans: 1,
+        exp: "Сөздік бойынша: «Манап – қырғыз билеушілері мен қолбасшылары»."
+    },
+    {
+        q: "16. «Керуен» сөзінің мағынасы қандай?",
+        opts: ["Алыс жерге жүк тасуға немесе сауда жасауға арналған көлік тізбегі", "Әскери жасақ", "Ескерткіш тас", "Хан кеңесшісі"],
+        ans: 0,
+        exp: "Сөздік бойынша: «Керуен – алыс жерге жүк тасуға немесе сауда жасауға арналған көлік тізбегі»."
+    },
+    {
+        q: "17. Бұқар жырау Қалқаманұлы өмір сүрген жылдар:",
+        opts: ["1693–1787 жж.", "1711–1781 жж.", "1722–1757 жж.", "1700–1775 жж."],
+        ans: 0,
+        exp: "Сөздікте: «Бұқар жырау Қалқаманұлы (1693–1787)»."
+    },
+    {
+        q: "18. Жоңғар нойоны, Давацидің бақталасы, 1755 жылы Цин империясына қарсы көтеріліс ұйымдастырған кім?",
+        opts: ["Галдан-Церен", "Әмірсана", "Шарыш", "Цеван-Рабдан"],
+        ans: 1,
+        exp: "Сөздік бойынша: «Әмірсана (1722–1757) – жоңғар нойоны... 1755 жылы қытайдың Цин империясына қарсы көтеріліс ұйымдастырды»."
+    },
+    {
+        q: "19. Абылай хан қазақ шаруашылығының қай түрлеріне қолдау көрсетті?",
+        opts: ["Тек көшпелі мал шаруашылығына", "Егіншілікке, шөп шабуға, балық аулауға және керуен саудасына", "Тек аңшылыққа", "Тек өнеркәсіпке"],
+        ans: 1,
+        exp: "Оқулықта: «Қазақтардың егіншілікпен, шөп шабумен және балық аулаумен айналысуына қолдау көрсетті. Хан қазақ даласындағы керуен саудасын күшейтуге барынша көңіл бөлді»."
+    },
+    {
+        q: "20. Абылай ханның сыртқы саясатының басты мақсаты не болды?",
+        opts: ["Басқа елдердің жерін басып алу", "Қазақстан аумағының ешкім қол сұға алмайтын тұтастығын қамтамасыз ету", "Тек Ресейдің құрамына кіру", "Жоңғарияға толық бағыну"],
+        ans: 1,
+        exp: "Оқулықта: «Абылайдың сыртқы саяси қызметі Қазақстан аумағының ешкім қол сұға алмайтын тұтастығын қамтамасыз етуге бағытталды»."
+    }
+];
+
+function renderTests() {
+    let container = document.getElementById('test-container');
+    let html = "";
+    testData.forEach((t, idx) => {
+        html += `<div class="q-item" id="test-q-${idx}">
+            <p><strong>${t.q}</strong></p>`;
+        t.opts.forEach((o, oIdx) => {
+            html += `<div class="test-opt">
+                <label><input type="radio" name="test_${idx}" value="${oIdx}"> ${o}</label>
+            </div>`;
+        });
+        html += `<button class="btn" style="padding: 8px 16px; font-size: 16px;" onclick="checkSingleTest(${idx})">Тексеру</button>
+        <div id="test-fb-${idx}"></div>
+        </div>`;
+    });
+    container.innerHTML = html;
+}
+
+function checkSingleTest(idx) {
+    let radios = document.getElementsByName('test_' + idx);
+    let selected = -1;
+    for (let r of radios) {
+        if (r.checked) selected = parseInt(r.value);
+    }
+    let fb = document.getElementById('test-fb-' + idx);
+    let t = testData[idx];
+
+    if (selected === t.ans) {
+        fb.innerHTML = `<div class="correct-ans">Дұрыс! <div class="explanation">${t.exp}</div></div>`;
+        addDombyra('test_' + idx);
+    } else {
+        fb.innerHTML = `<div class="wrong-ans">Қате! Дұрыс жауабы: ${t.opts[t.ans]}<div class="explanation">${t.exp}</div></div>`;
+    }
+}
+
+window.onload = function() {
+    renderTests();
+};
+</script>
+
+</body>
+</html>
