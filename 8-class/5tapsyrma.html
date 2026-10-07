@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Қазақстандағы ұлттық автономиялар - Тарихи Ойын</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4e8c1;
+            background-image: radial-gradient(#e0d0a0 1px, transparent 0);
+            background-size: 24px 24px;
+            color: #3d2b1f;
+            margin: 0;
+            padding: 20px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fdf6e2;
+            border: 4px solid #8b5a2b;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h1, h2, h3 {
+            color: #5c3a21;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        h1 {
+            border-bottom: 2px solid #8b5a2b;
+            padding-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .header-info {
+            background-color: #efe0b9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #8b5a2b;
+            margin-bottom: 25px;
+            font-size: 19px;
+        }
+
+        .score-board {
+            position: sticky;
+            top: 10px;
+            background: #8b5a2b;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-card {
+            background: #f9f0d3;
+            border: 2px solid #c8b282;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .descriptor {
+            background: #eae0c8;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 16px;
+            font-style: italic;
+            border-left: 3px solid #8b5a2b;
+        }
+
+        .btn-check {
+            background-color: #8b5a2b;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+            display: block;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .btn-check:hover {
+            background-color: #6a421f;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            display: none;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .correct-answer-text {
+            color: #1b5e20;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        /* Task specific styles */
+        .q-item {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #c8b282;
+        }
+
+        select, input[type="text"] {
+            font-size: 18px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #8b5a2b;
+            background-color: #fff8eb;
+            margin-top: 5px;
+        }
+
+        input[type="text"] {
+            width: 95%;
+        }
+
+        .mcq-option {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        .mcq-option input {
+            margin-right: 10px;
+            transform: scale(1.3);
+        }
+
+        .test-explanation {
+            color: #1b5e20;
+            background-color: #e8f5e9;
+            border-left: 4px solid #2e7d32;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-size: 16px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Тарихи білім сайысы: Қазақстандағы ұлттық автономиялар</h1>
+
+    <div class="header-info">
+        <p><strong>Сынып:</strong> 8-сынып</p>
+        <p><strong>Сабақтың тақырыбы:</strong> Қазақстандағы ұлттық автономиялар</p>
+        <p><strong>Зерттеу сұрағы:</strong> Алаш Орда үкіметі мен Түркістан (Қоқан) автономиясының идеялары неліктен жүзеге аспады?</p>
+        <p><strong>Оқыту мақсаттары:</strong><br>
+        • 8.3.1.6 Қазақстанда құрылған ұлттық автономиялардың маңыздылығына баға беру;<br>
+        • 8.1.2.1 Қазақ зиялыларының қоғамдағы рөлі мен қызметін талдау.</p>
+    </div>
+
+    <div class="score-board">
+        <span>Сіздің жинаған домбыраларыңыз:</span>
+        <span id="score">0</span> 🪕
+    </div>
+
+    <!-- 1-ТАПСЫРМА -->
+    <div class="task-card" id="task1">
+        <h2>1-тапсырма: Ақиқат немесе Жалған</h2>
+        <p>Төмендегі тұжырымдарды оқып, мәтінге сай "Ақиқат" немесе "Жалған" екенін анықтаңыз.</p>
+        
+        <div class="q-item" data-q="1">
+            <p>1. М. Шоқай бүкіл Түркістанды бір автономиялық республикаға біріктіріп, оны демократиялық Ресейдің құрамына енгізу идеясын қозғады.</p>
+            <select class="t1-ans">
+                <option value="">-- Жауапты таңдаңыз --</option>
+                <option value="Ақиқат">Ақиқат</option>
+                <option value="Жалған">Жалған</option>
+            </select>
+        </div>
+
+        <div class="q-item" data-q="2">
+            <p>2. Түркістан автономиясы үкіметін алғаш Мұстафа Шоқай, кейін М. Тынышбаев басқарды.</p>
+            <select class="t1-ans">
+                <option value="">-- Жауапты таңдаңыз --</option>
+                <option value="Ақиқат">Ақиқат</option>
+                <option value="Жалған">Жалған</option>
+            </select>
+        </div>
+
+        <div class="q-item" data-q="3">
+            <p>3. Алаш автономиясының орталығы Семей қаласы болып жарияланды.</p>
+            <select class="t1-ans">
+                <option value="">-- Жауапты таңдаңыз --</option>
+                <option value="Ақиқат">Ақиқат</option>
+                <option value="Жалған">Жалған</option>
+            </select>
+        </div>
+
+        <div class="q-item" data-q="4">
+            <p>4. Алашорданың Уақытша халықтық кеңесі 15 адамнан тұрды, оның 10-ы басқа халық өкілдері еді.</p>
+            <select class="t1-ans">
+                <option value="">-- Жауапты таңдаңыз --</option>
+                <option value="Ақиқат">Ақиқат</option>
+                <option value="Жалған">Жалған</option>
+            </select>
+        </div>
+
+        <div class="q-item" data-q="5">
+            <p>5. Колчак құрған Уақытша Сібір үкіметі 1918 жылдың қазанында Алашорда қызметіне тыйым салған шешім қабылдады.</p>
+            <select class="t1-ans">
+                <option value="">-- Жауапты таңдаңыз --</option>
+                <option value="Ақиқат">Ақиқат</option>
+                <option value="Жалған">Жалған</option>
+            </select>
+        </div>
+
+        <button class="btn-check" onclick="checkTask1()">1-тапсырманы тексеру</button>
+        <div class="feedback" id="fb1"></div>
+
+        <div class="descriptor">
+            <strong>Дескриптор:</strong><br>
+            - Түркістан және Алаш автономиялары туралы 5 тұжырымның ақиқат немесе жалған екенін мәтін бойынша дұрыс анықтайды.
+        </div>
+    </div>
+
+    <!-- 2-ТАПСЫРМА -->
+    <div class="task-card" id="task2">
+        <h2>2-тапсырма: Блум таксономиясы бойынша сұрақтар</h2>
+        
+        <div class="q-item">
+            <p><strong>1. Білу:</strong> Түркістан АКСР-інің астанасы қай қала болды?</p>
+            <select id="t2-1">
+                <option value="">-- Таңдаңыз --</option>
+                <option value="Қоқан">Қоқан</option>
+                <option value="Ташкент">Ташкент</option>
+                <option value="Орынбор">Орынбор</option>
+                <option value="Семей">Семей</option>
+            </select>
+        </div>
+
+        <div class="q-item">
+            <p><strong>2. Түсіну:</strong> Меншевиктік және большевиктік көзқарастар арасында Алаш қайраткерлері неліктен большевиктермен жүргізілген келісімде нәтижеге жете алмады?</p>
+            <select id="t2-2">
+                <option value="">-- Таңдаңыз --</option>
+                <option value="A">Алаш қайраткерлері пролетариат диктатурасы мен тап күресі идеясын қолдамады.</option>
+                <option value="B">Алаш қайраткерлері монархияны қайта орнатуды жақтады.</option>
+                <option value="C">Алаш қайраткерлері әскери көмек сұраудан бас тартты.</option>
+            </select>
+        </div>
+
+        <div class="q-item">
+            <p><strong>3. Қолдану:</strong> 1918 жылы наурызда Халел және Жаһанша Досмұхамедовтер Мәскеуге барып, кімдерге II Бүкілқазақ съезінің қаулысын тапсырды?</p>
+            <select id="t2-3">
+                <option value="">-- Таңдаңыз --</option>
+                <option value="A">Колчак пен Анненковке</option>
+                <option value="B">В. И. Ленин мен И. В. Сталинге</option>
+                <option value="C">Ә. Бөкейхан мен М. Шоқайға</option>
+            </select>
+        </div>
+
+        <div class="q-item">
+            <p><strong>4. Талдау:</strong> Алашорда үкіметі мен Түркістан мұхтариатының тарихи маңызын талдап көрсетіңіз.</p>
+            <select id="t2-4">
+                <option value="">-- Таңдаңыз --</option>
+                <option value="A">Тек қана Түркістан өңірінің экономикасын дамытумен шектелді.</option>
+                <option value="B">Ұлт-азаттық қозғалыстар мен мемлекеттілік дәстүрдің жандануына ықпал етті, кейін Қазақ АКСР-інің және тәуелсіз Қазақстанның негізі қалануында зоры рөл атқарды.</option>
+                <option value="C">Шетелдік мемлекеттермен әскери одақ құруға толық жағдай жасады.</option>
+            </select>
+        </div>
+
+        <button class="btn-check" onclick="checkTask2()">2-тапсырманы тексеру</button>
+        <div class="feedback" id="fb2"></div>
+
+        <div class="descriptor">
+            <strong>Дескриптор:</strong><br>
+            - Түркістан АКСР астанасын біледі;<br>
+            - Алаш пен большевиктер арасындағы келіспеушілік себебін түсінеді;<br>
+            - Дерекке сүйеніп Мәскеудегі кездесуді қолдана анықтайды;<br>
+            - Ұлттық автономиялардың тарихи маңызына талдау жасайды.
+        </div>
+    </div>
+
+    <!-- 3-ТАПСЫРМА -->
+    <div class="task-card" id="task3">
+        <h2>3-тапсырма: Жасырын кілт сөздерді табу</h2>
+        <p>Сұрақтарға жауап беріп, жасырылған 5 негізгі кілт сөзді жазыңыз:</p>
+
+        <div class="q-item">
+            <p>1. Сұрақ: 1917 жылы қарашада IV Төтенше өлкелік мұсылман съезі қай қалада өткізіліп, Түркістан автономиясы жарияланды? (Кілт сөз: қала аты)</p>
+            <input type="text" id="t3-1" placeholder="Жауабыңызды жазыңыз...">
+        </div>
+
+        <div class="q-item">
+            <p>2. Сұрақ: Екінші бүкілқазақ съезінің қарарында халықты қиыншылықтардан корғау үшін не құру қажеттілігі атап көрсетілді? (Кілт сөз)</p>
+            <input type="text" id="t3-2" placeholder="Жауабыңызды жазыңыз...">
+        </div>
+
+        <div class="q-item">
+            <p>3. Сұрақ: Жасырын дауыс беру қорытындысы бойынша 40 дауыс жинап, Алашорда үкімет төрағасы болып сайланған тұлға кім? (Кілт сөз: тегі немесе аты-жөні)</p>
+            <input type="text" id="t3-3" placeholder="Жауабыңызды жазыңыз...">
+        </div>
+
+        <div class="q-item">
+            <p>4. Сұрақ: Жетісу жерінде Алашорда милициясын құрып, 1918 жылы тамызда ерлікпен қаза тапқан қайраткер? (Кілт сөз: тегі немесе аты-жөні)</p>
+            <input type="text" id="t3-4" placeholder="Жауабыңызды жазыңыз...">
+        </div>
+
+        <div class="q-item">
+            <p>5. Сұрақ: Қазақ халқына қарсы әрекеттерінде айрықша қатыгездік танытқан атаманның отряды? (Кілт сөз: атаманның тегі)</p>
+            <input type="text" id="t3-5" placeholder="Жауабыңызды жазыңыз...">
+        </div>
+
+        <button class="btn-check" onclick="checkTask3()">3-тапсырманы тексеру</button>
+        <div class="feedback" id="fb3"></div>
+
+        <div class="descriptor">
+            <strong>Дескриптор:</strong><br>
+            - Сұрақтар арқылы жасырылған 5 тарихи кілт сөзді (қала, ұйымдық құрылым, қайраткерлер аты-жөні) мәтінге сәйкес дәл табады.
+        </div>
+    </div>
+
+    <!-- 4-ТАПСЫРМА -->
+    <div class="task-card" id="task4">
+        <h2>4-тапсырма: Тарихи хронология (Оқиғаны тап)</h2>
+        <p>Мәтіндегі хронологиялық жылдар берілген, сол жылы болған жасырын оқиғаны таңдаңыз:</p>
+
+        <div class="q-item">
+            <p><strong>1) 1917 жылы 5–13 желтоқсан:</strong></p>
+            <select id="t4-1">
+                <option value="">-- Оқиғаны таңдаңыз --</option>
+                <option value="A">Қоқан қаласында жазалаушы отрядтың шабуылы болды.</option>
+                <option value="B">Орынборда «Алаш» партиясының Екінші бүкілқазақ съезі өтті.</option>
+                <option value="C">Уфа қаласында кеңес өтті.</option>
+            </select>
+        </div>
+
+        <div class="q-item">
+            <p><strong>2) 1918 жылдың қаңтары:</strong></p>
+            <select id="t4-2">
+                <option value="">-- Оқиғаны таңдаңыз --</option>
+                <option value="A">Қоқан қаласына Ташкенттен большевиктердің жазалаушы отряды жіберілді.</option>
+                <option value="B">Түркістан АКСР-і жарияланды.</option>
+                <option value="C">Алашорда үкіметі таратылды.</option>
+            </select>
+        </div>
+
+        <div class="q-item">
+            <p><strong>3) 1918 жылдың 4–7 ақпан аралығы:</strong></p>
+            <select id="t4-3">
+                <option value="">-- Оқиғаны таңдаңыз --</option>
+                <option value="A">Уфада большевиктерге қарсы кеңес өтті.</option>
+                <option value="B">Қоқанда 10 мыңнан астам бейбіт тұрғын өтірілді.</option>
+                <option value="C">Мәскеуде Ленинмен кездесу өтті.</option>
+            </select>
+        </div>
+
+        <div class="q-item">
+            <p><strong>4) 1918 жылы сәуір:</strong></p>
+            <select id="t4-4">
+                <option value="">-- Оқиғаны таңдаңыз --</option>
+                <option value="A">Түркістан Автономиялық Кеңестік Социалистік Республикасы (Түркістан АКСР) жарияланды.</option>
+                <option value="B">Екінші бүкілқазақ съезі басталды.</option>
+                <option value="C">Отыншы Әлжанов қаза тапты.</option>
+            </select>
+        </div>
+
+        <div class="q-item">
+            <p><strong>5) 1918 жылы 8–23 қыркүйек:</strong></p>
+            <select id="t4-5">
+                <option value="">-- Оқиғаны таңдаңыз --</option>
+                <option value="A">Қоқан қаласы тоналды.</option>
+                <option value="B">Уфа қаласында большевиктерге қарсы партиялар мен үкіметтердің кеңесі өтті.</option>
+                <option value="C">Алаш милициясы құрылды.</option>
+            </select>
+        </div>
+
+        <button class="btn-check" onclick="checkTask4()">4-тапсырманы тексеру</button>
+        <div class="feedback" id="fb4"></div>
+
+        <div class="descriptor">
+            <strong>Дескриптор:</strong><br>
+            - Мәтіндегі хронологиялық жылдарға сәйкес болған тарихи оқиғаларды дұрыс анықтайды.
+        </div>
+    </div>
+
+    <!-- 20 ТЕСТ СҰРАҒЫ -->
+    <div class="task-card" id="taskTest">
+        <h2>5-тапсырма: 20 Тарихи Тест Сұрағы</h2>
+        <p>Әр сұрақтың дұрыс жауабын таңдаңыз. Қате жауап берсеңіз, бірден дұрыс жауабы мен мәтіннен анықтамасы шығады.</p>
+
+        <div id="test-container"></div>
+
+        <button class="btn-check" onclick="checkAllTests()">Тест нәтижесін қорытындылау</button>
+        <div class="feedback" id="fbTest"></div>
+    </div>
+
+</div>
+
+<script>
+    // Global score tracker
+    let score = 0;
+    let earnedPoints = {};
+
+    function addScore(key) {
+        if (!earnedPoints[key]) {
+            score++;
+            earnedPoints[key] = true;
+            document.getElementById('score').innerText = score;
+        }
+    }
+
+    // Task 1
+    function checkTask1() {
+        const answers = {
+            1: "Ақиқат",
+            2: "Жалған",
+            3: "Ақиқат",
+            4: "Жалған",
+            5: "Ақиқат"
+        };
+        const elements = document.querySelectorAll('#task1 .q-item');
+        let html = "<div class='correct-answer-text'>";
+        let correctCount = 0;
+
+        elements.forEach((el, index) => {
+            const qNum = index + 1;
+            const userAns = el.querySelector('select').value;
+            const rightAns = answers[qNum];
+
+            if (userAns === rightAns) {
+                correctCount++;
+                addScore('t1_' + qNum);
+                html += `<p style='color: green;'>✓ ${qNum}-сұрақ: Дұрыс! (${rightAns})</p>`;
+            } else {
+                html += `<p style='color: red;'>✗ ${qNum}-сұрақ: Қате. Тіркелген дұрыс жауап: <strong>${rightAns}</strong>.</p>`;
+            }
+        });
+
+        // Explanations for falses:
+        html += "<br><strong>Мәтін бойынша түзетулер:</strong><br>";
+        html += "- 2-сұрақ: Автономияны алғаш М. Тынышбаев, кейін Мұстафа Шоқай басқарды.<br>";
+        html += "- 4-сұрақ: Алашорданың Уақытша халықтық кеңесі 25 адамнан тұрды, оның 10-ы басқа халық өкілдері еді.";
+        html += "</div>";
+
+        const fb = document.getElementById('fb1');
+        fb.innerHTML = html;
+        fb.style.display = 'block';
+    }
+
+    // Task 2
+    function checkTask2() {
+        const answers = {
+            't2-1': 'Ташкент',
+            't2-2': 'A',
+            't2-3': 'B',
+            't2-4': 'B'
+        };
+
+        let html = "<div class='correct-answer-text'>";
+
+        if (document.getElementById('t2-1').value === answers['t2-1']) {
+            addScore('t2_1');
+            html += "<p style='color: green;'>✓ 1. Білу: Дұрыс! (Ташкент)</p>";
+        } else {
+            html += "<p style='color: red;'>✗ 1. Білу: Қате. Дұрыс жауабы: Ташкент (Түркістан АКСР-інің астанасы).</p>";
+        }
+
+        if (document.getElementById('t2-2').value === answers['t2-2']) {
+            addScore('t2_2');
+            html += "<p style='color: green;'>✓ 2. Түсіну: Дұрыс!</p>";
+        } else {
+            html += "<p style='color: red;'>✗ 2. Түсіну: Қате. Дұрыс жауабы: Алаш қайраткерлері пролетариат диктатурасы мен тап күресі идеясын қолдамады.</p>";
+        }
+
+        if (document.getElementById('t2-3').value === answers['t2-3']) {
+            addScore('t2_3');
+            html += "<p style='color: green;'>✓ 3. Қолдану: Дұрыс!</p>";
+        } else {
+            html += "<p style='color: red;'>✗ 3. Қолдану: Қате. Дұрыс жауабы: В. И. Ленин мен И. В. Сталинге тапсырды.</p>";
+        }
+
+        if (document.getElementById('t2-4').value === answers['t2-4']) {
+            addScore('t2_4');
+            html += "<p style='color: green;'>✓ 4. Талдау: Дұрыс!</p>";
+        } else {
+            html += "<p style='color: red;'>✗ 4. Талдау: Қате. Дұрыс жауабы: Ұлт-азаттық қозғалыстар мен мемлекеттілік дәстүрдің жандануына ұлкен ықпал етті...</p>";
+        }
+
+        html += "</div>";
+        const fb = document.getElementById('fb2');
+        fb.innerHTML = html;
+        fb.style.display = 'block';
+    }
+
+    // Task 3
+    function checkTask3() {
+        const answers = [
+            { id: 't3-1', key: 'қоқан', full: 'Қоқан' },
+            { id: 't3-2', key: 'милиция', full: 'милиция' },
+            { id: 't3-3', key: 'бөкейхан', full: 'Ә. Бөкейхан (Әлихан Бөкейханов)' },
+            { id: 't3-4', key: 'әлжанов', full: 'Отыншы Әлжанов' },
+            { id: 't3-5', key: 'анненков', full: 'Анненков' }
+        ];
+
+        let html = "<div class='correct-answer-text'>";
+
+        answers.forEach((item, idx) => {
+            const val = document.getElementById(item.id).value.trim().toLowerCase();
+            if (val.includes(item.key)) {
+                addScore('t3_' + idx);
+                html += `<p style='color: green;'>✓ ${idx+1}-кілт сөз: Дұрыс! (${item.full})</p>`;
+            } else {
+                html += `<p style='color: red;'>✗ ${idx+1}-кілт сөз: Қате. Дұрыс кілт сөз: <strong>${item.full}</strong></p>`;
+            }
+        });
+
+        html += "</div>";
+        const fb = document.getElementById('fb3');
+        fb.innerHTML = html;
+        fb.style.display = 'block';
+    }
+
+    // Task 4
+    function checkTask4() {
+        const answers = {
+            't4-1': 'B',
+            't4-2': 'A',
+            't4-3': 'B',
+            't4-4': 'A',
+            't4-5': 'B'
+        };
+
+        let html = "<div class='correct-answer-text'>";
+
+        const t4_texts = {
+            't4-1': 'Орынборда «Алаш» партиясының Екінші бүкілқазақ съезі өтті.',
+            't4-2': 'Қоқан қаласына Ташкенттен большевиктердің жазалаушы отряды жіберілді.',
+            't4-3': '10 мыңнан астам бейбіт тұрғын өтірілді.',
+            't4-4': 'Түркістан Автономиялық Кеңестік Социалистік Республикасы (Түркістан АКСР) жарияланды.',
+            't4-5': 'Уфа қаласында большевиктерге қарсы партиялар мен үкіметтердің кеңесі өтті.'
+        };
+
+        for (let i = 1; i <= 5; i++) {
+            const key = 't4-' + i;
+            const val = document.getElementById(key).value;
+            if (val === answers[key]) {
+                addScore('t4_' + i);
+                html += `<p style='color: green;'>✓ ${i}-хронология: Дұрыс!</p>`;
+            } else {
+                html += `<p style='color: red;'>✗ ${i}-хронология: Қате. Дұрыс жауабы: <strong>${t4_texts[key]}</strong></p>`;
+            }
+        }
+
+        html += "</div>";
+        const fb = document.getElementById('fb4');
+        fb.innerHTML = html;
+        fb.style.display = 'block';
+    }
+
+    // 20 Tests Data from Text
+    const testData = [
+        {
+            q: "1. IV Төтенше өлкелік мұсылман съезі қашан өтті?",
+            options: ["1917 жылы қарашада", "1918 жылы қаңтарда", "1918 жылы сәуірде", "1917 жылы желтоқсанда"],
+            correct: 0,
+            exp: "Мәтін бойынша: 1917 жылы қарашада IV Төтенше өлкелік мұсылман съезі өтті."
+        },
+        {
+            q: "2. Түркістан автономиясының орталығы болған қала:",
+            options: ["Ташкент", "Қоқан", "Орынбор", "Семей"],
+            correct: 1,
+            exp: "Мәтін бойынша: ...орталығы Қоқан қаласы болатын Түркістан автономиясын құру жөнiнде шешiм қабылдады."
+        },
+        {
+            q: "3. Түркістан автономиясын ең алғаш кім басқарды?",
+            options: ["М. Шоқай", "М. Тынышбаев", "Ә. Бөкейхан", "А. Байтұрсынов"],
+            correct: 1,
+            exp: "Мәтін бойынша: Автономия үкiметiн көрнектi қайраткер М. Тынышбаев, кейiн Мұстафа Шоқай басқарды."
+        },
+        {
+            q: "4. М. Шоқай билігі қай көлемде ғана шектелді?",
+            options: ["Бүкіл Орта Азия көлемінде", "Қоқан мен уезд көлемiнде", "Семей мен Орынборда", "Ташкент қаласында"],
+            correct: 1,
+            exp: "Мәтін бойынша: Мұстафа Шоқай бiлiгi Қоқан мен уезд көлемiнде ғана шектелдi."
+        },
+        {
+            q: "5. 1918 жылдың қаңтарында Қоқан қаласына қай қаладан жазалаушы отряд жіберілді?",
+            options: ["Орынбордан", "Мәскеуден", "Ташкенттен", "Семейден"],
+            correct: 2,
+            exp: "Мәтін бойынша: 1918 жылдың қаңтарында Қоқан қаласына Ташкенттен большевиктердiң жазалаушы отряды жiберiлдi."
+        },
+        {
+            q: "6. Жазалау шараларына қай саяси партияның мүшелері де қатысты?",
+            options: ["«Алаш»", "«Дашнакцутюн»", "«Кадет»", "«Эсер»"],
+            correct: 1,
+            exp: "Мәтін бойынша: Жазалау шараларына армяндардың «Дашнакцутюн» саяси партиясының мүшелерi де қатысты."
+        },
+        {
+            q: "7. Қоқанда большевиктер әскеріне қарсы тұрған сарбаздар саны қанша еді?",
+            options: ["Он мың", "Екі мың", "Бес жүз", "Жүз елу мың"],
+            correct: 1,
+            exp: "Мәтін бойынша: Өзбек пен қазақтан тұратын екi мың сарбаз большевиктердiң әскерi күшiне қарсы тұра алмады."
+        },
+        {
+            q: "8. 1918 жылдың 4-7 ақпан аралығында Қоқанда қанша бейбіт тұрғын өтірілді?",
+            options: ["150 мың", "2 мың", "10 мыңнан астам", "50 мың"],
+            correct: 2,
+            exp: "Мәтін бойынша: 1918 жылдың 4–7 ақпан аралығында 10 мыңнан астам бейбiт тұрғын өлтiрiлдi."
+        },
+        {
+            q: "9. Түркістан АКСР-інің астанасы қай қала болды?",
+            options: ["Қоқан", "Ташкент", "Алматы", "Орынбор"],
+            correct: 1,
+            exp: "Мәтін бойынша: Түркiстан АКСР-iнiң астанасы Ташкент қаласы болды."
+        },
+        {
+            q: "10. «Алаш» партиясының Екінші бүкілқазақ съезі қашан және қайда өтті?",
+            options: ["1917 жылы 5–13 желтоқсанда Орынборда", "1918 жылы наурызда Мәскеуде", "1917 жылы қарашада Қоқанда", "1918 жылы қыркүйекте Уфада"],
+            correct: 0,
+            exp: "Мәтін бойынша: 1917 жылы 5–13 желтоқсанда Орынборда «Алаш» партиясының Екiншi бүкiлқазақ съезi өттi."
+        },
+        {
+            q: "11. Алаш автономиясы үкіметінің ресми атауы:",
+            options: ["Халық Комиссарлары Кеңесі", "Алашорда (Уақытша халықтық кеңес)", "Түркістан мұхтариаты", "Әскери ревком"],
+            correct: 1,
+            exp: "Мәтін бойынша: Алашорда (Алаш автономиясы үкiметi) деген атпен Уақытша халықтық кеңес – үкiмет құрылғаны айтылды."
+        },
+        {
+            q: "12. Алашорданың Уақытша халықтық кеңесіне қанша мүше енді?",
+            options: ["10 мүше", "15 мүше", "25 мүше", "40 мүше"],
+            correct: 1,
+            exp: "Мәтін бойынша: Алашорда үкiметiнiң құрамына 15 мүше енген болатын."
+        },
+        {
+            q: "13. Жасырын дауыс беру бойынша Ә. Бөкейхан қанша дауыс жинап үкімет төрағасы болды?",
+            options: ["25 дауыс", "15 дауыс", "40 дауыс", "50 дауыс"],
+            correct: 2,
+            exp: "Мәтін бойынша: Жасырын дауыс беру қорытындысы бойынша 40 дауыс жинап... Ә. Бөкейхан үкiмет төрағасы атанды."
+        },
+        {
+            q: "14. Алашорданың батыс бөлімінің төрағалығына кім сайланды?",
+            options: ["Ә. Бөкейхан", "Жаһанша Досмұхамедов", "Отыншы Әлжанов", "М. Тынышбаев"],
+            correct: 1,
+            exp: "Мәтін бойынша: Алашорданың батыс бөлiмiнiң төрағалығына Жаһанша Досмұхамедов сайланды."
+        },
+        {
+            q: "15. Алашорданың шығыс бөлімі қай қалада құрылды?",
+            options: ["Орынборда", "Семейде (Алаш)", "Ташкентте", "Ойылда"],
+            correct: 1,
+            exp: "Мәтін бойынша: Алаш (Семей) қаласында Алашорданың шығыс бөлiмi құрылды."
+        },
+        {
+            q: "16. Отыншы Әлжанов қашан және қай жерде ерлікпен қаза тапты?",
+            options: ["1917 жылы желтоқсанда Орынборда", "1918 жылы тамызда Жетісу жерінде", "1918 жылы қаңтарда Қоқанда", "1918 жылы қазанда Уфада"],
+            correct: 1,
+            exp: "Мәтін бойынша: ...О. Әлжанов большевиктермен кескiлескен қан майданда 1918 жылы тамыз айында ерлiкпен қаза тапты."
+        },
+        {
+            q: "17. 1918 жылы 8-23 қыркүйекте большевиктерге қарсы кеңес қай қалада өтті?",
+            options: ["Мәскеуде", "Уфада", "Ташкентте", "Орынборда"],
+            correct: 1,
+            exp: "Мәтін бойынша: 1918 жылы 8–23 қыркүйекте Уфа қаласында большевиктерге қарсы партиялар мен үкiметтердiң кеңесi өттi."
+        },
+        {
+            q: "18. Алаш автономиясын мойындамай, біртұтас бөлінбейтін Ресейді қалаған ақ гвардияшылар басшысы:",
+            options: ["Колчак", "Сталин", "Ленин", "Анненков"],
+            correct: 0,
+            exp: "Мәтін бойынша: Одақтас болғанымен, ақ гвардияшылардың Колчак үкiметi Алаш автономиясын мойындамады..."
+        },
+        {
+            q: "19. Алаш қайраткерлері толық автономия алу идеясының қиындық тудыратынын не себепті сезінді?",
+            options: ["Әскери-саяси жағдай мен экономикалық дамудың әлсіздігіне байланысты", "Халықтың қолдамауынан", "Шетелдік мемлекеттердің тыйым салуынан", "Пара бергісі келмегендіктен"],
+            correct: 0,
+            exp: "Мәтін бойынша: Алаш қайраткерлерi елдегi әскери-саяси жағдай, қазақ қоғамы экономикалық дамуының әлсiздiгiне байланысты толық автономия алу идеясының қиындық тудыратынын айқын сезiндi."
+        },
+        {
+            q: "20. Екінші бүкілқазақ съезінің қарары бойынша қандай ұйым құру қажеттілігі ерекше атап көрсетілді?",
+            options: ["Әскер", "Дереу милиция", "Революциялық комитет", "Парламент"],
+            correct: 1,
+            exp: "Мәтін бойынша: ...дереу милиция құру қажеттiлiгi туралы ерекше атап көрсетiлдi."
+        }
+    ];
+
+    // Render Tests
+    function renderTests() {
+        const container = document.getElementById('test-container');
+        let html = '';
+
+        testData.forEach((t, index) => {
+            html += `<div class="q-item" id="test-q-${index}">
+                <p><strong>${t.q}</strong></p>`;
+            
+            t.options.forEach((opt, optIdx) => {
+                html += `<label class="mcq-option">
+                    <input type="radio" name="test_${index}" value="${optIdx}" onchange="evaluateSingleTest(${index}, ${optIdx})">
+                    ${opt}
+                </label>`;
+            });
+
+            html += `<div class="test-explanation" id="exp-${index}">
+                <strong>Анықтама (Дұрыс жауабы):</strong> ${t.options[t.correct]}<br>
+                <em>${t.exp}</em>
+            </div>`;
+
+            html += `</div>`;
+        });
+
+        container.innerHTML = html;
+    }
+
+    function evaluateSingleTest(qIdx, selectedOpt) {
+        const t = testData[qIdx];
+        const expDiv = document.getElementById(`exp-${qIdx}`);
+
+        if (selectedOpt === t.correct) {
+            addScore('test_' + qIdx);
+            expDiv.style.display = 'none';
+        } else {
+            expDiv.style.display = 'block';
+        }
+    }
+
+    function checkAllTests() {
+        let correctCount = 0;
+        testData.forEach((t, index) => {
+            const selected = document.querySelector(`input[name="test_${index}"]:checked`);
+            const expDiv = document.getElementById(`exp-${index}`);
+            if (selected) {
+                if (parseInt(selected.value) === t.correct) {
+                    correctCount++;
+                    addScore('test_' + index);
+                    expDiv.style.display = 'none';
+                } else {
+                    expDiv.style.display = 'block';
+                }
+            } else {
+                expDiv.style.display = 'block';
+            }
+        });
+
+        const fb = document.getElementById('fbTest');
+        fb.innerHTML = `<div class='correct-answer-text'><p style='color: green;'>Сіз 20 тесттің <strong>${correctCount}</strong> сұрағына бірден дұрыс жауап бердіңіз!</p> Барлық қате таңдалған сұрақтардың астында дұрыс жауап пен мәтіндік анықтама көрсетілді.</div>`;
+        fb.style.display = 'block';
+    }
+
+    window.onload = function() {
+        renderTests();
+    };
+</script>
+
+</body>
+</html>

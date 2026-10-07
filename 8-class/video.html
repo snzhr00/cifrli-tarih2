@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бейнежазба | Цифрлі тарих</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: #FDFBF7; /* Светлый приятный фон (цвет слоновой кости) */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Орнаменты по углам (встроены напрямую) */
+        .oyu {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            /* Встроенный SVG орнамент "қошқар мүйіз" золотистого цвета */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='none' stroke='%23C8A951' stroke-width='3' d='M10,10 C40,10 60,30 60,60 C60,75 50,85 35,85 C20,85 10,75 10,60 C10,45 30,40 45,55 C55,65 50,75 40,75 C30,75 25,65 30,55' /%3E%3Cpath fill='none' stroke='%23C8A951' stroke-width='3' d='M10,10 L10,30 M10,10 L30,10' /%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: contain;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+        
+        /* Расставляем и переворачиваем орнаменты по 4 углам */
+        .oyu-top-left { top: 20px; left: 20px; }
+        .oyu-top-right { top: 20px; right: 20px; transform: scaleX(-1); }
+        .oyu-bottom-left { bottom: 20px; left: 20px; transform: scaleY(-1); }
+        .oyu-bottom-right { bottom: 20px; right: 20px; transform: scale(-1, -1); }
+
+        /* Кнопка "Назад" */
+        .back-btn {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            z-index: 100;
+            border: 1px solid #f0f0f0;
+        }
+
+        .back-btn:hover {
+            background-color: #3498db;
+            color: white;
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        /* Белый блок для видео по центру */
+        .video-container {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+            width: 80%;
+            max-width: 900px;
+            z-index: 10;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 12px;
+            outline: none;
+            background: #000; /* Черный фон до загрузки видео */
+        }
+
+        /* Адаптация для телефонов */
+        @media (max-width: 768px) {
+            .oyu { width: 80px; height: 80px; }
+            .video-container { width: 92%; padding: 12px; }
+            .back-btn { top: 15px; left: 15px; font-size: 0.9rem; padding: 8px 15px; }
+            h1 { font-size: 1.5rem; margin-bottom: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 4 орнамента по углам -->
+    <div class="oyu oyu-top-left"></div>
+    <div class="oyu oyu-top-right"></div>
+    <div class="oyu oyu-bottom-left"></div>
+    <div class="oyu oyu-bottom-right"></div>
+
+    <!-- Кнопка возвращает на главную страницу класса -->
+    <a href="index.html" class="back-btn">← Артқа</a>
+
+    <!-- Блок с видео -->
+    <div class="video-container">
+        <h1>Тарихи бейнежазба</h1>
+        
+        <!-- ВИДЕО: Замените "my-video.mp4" на название вашего файла -->
+        <video controls>
+            <source src="7beinezhazba.mp4" type="video/mp4">
+            Сіздің браузеріңіз видеоны қолдамайды.
+        </video>
+    </div>
+
+</body>
+</html>
