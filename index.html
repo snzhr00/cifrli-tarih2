@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цифрлі тарих | Қазақстан тарихы</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            padding: 2rem;
+             background: url('bg.jpg');
+    background-size: cover; /* Растянуть на весь экран */
+    background-position: center; /* Центрировать картинку */
+    background-attachment: fixed; /* Фон не будет "уезжать" при прокрутке вниз */
+    background-repeat: no-repeat;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            background: white;
+            padding: 2.5rem 4rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #34495e;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #ffffff;
+            background: #3498db;
+            display: inline-block;
+            padding: 0.4rem 1.5rem;
+            border-radius: 30px;
+            font-weight: normal;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .classes-grid {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .class-card {
+            background: white;
+            text-decoration: none;
+            color: #2c3e50;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            width: 220px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .class-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: #3498db;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .class-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.15);
+            border-color: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+        }
+
+        .class-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .class-card span {
+            display: block;
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            font-weight: normal;
+            margin-top: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .class-card:hover span {
+            color: #3498db;
+        }
+
+        @media (max-width: 600px) {
+            header { padding: 1.5rem 2rem; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.4rem; }
+            .class-card { width: 100%; padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Цифрлі тарих</h1>
+        <h2>Қазақстан тарихы</h2>
+        <h3>1 тоқсан</h3>
+    </header>
+    
+    <div class="classes-grid">
+        <!-- Все карточки теперь ссылаются на template.html -->
+        <a href="6-class/index.html" class="class-card">
+            6
+            <span>сыныпқа өту</span>
+        </a>
+        <a href="7-class/index.html" class="class-card">
+            7
+            <span>сыныпқа өту</span>
+        </a>
+        <a href="8-class/index.html" class="class-card">
+            8
+            <span>сыныпқа өту</span>
+        </a>
+    </div>
+</body>
+</html>
